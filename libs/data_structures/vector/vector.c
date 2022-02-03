@@ -13,7 +13,7 @@ vector createVector(size_t size) {
     exit(1);
 }
 
-void reverse(vector *v, size_t newCapacity) {
+void reserve(vector *v, size_t newCapacity) {
     v->data = (int *) realloc(v->data, sizeof(int) * newCapacity);
     v->capacity = newCapacity;
     bool flag = newCapacity != 0;
@@ -55,9 +55,11 @@ void append(int *a, size_t *size, int value) {
 }
 
 void pushBack(vector *v, int value) {
-    if (isFull(v)) {
-        reverse(v, 2 * v->size);
+    bool flag = v->size !=0;
+    if (isFull(v) && flag) {
+        reserve(v, 2 * v->size);
     }
+    v->capacity+= !flag;
     append(v->data, &v->size, value);
 }
 

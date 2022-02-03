@@ -12,7 +12,7 @@ typedef struct vector {
 
 vector createVector(size_t size);
 
-void reverse(vector *v, size_t newCapacity);
+void reserve(vector *v, size_t newCapacity);
 
 void clear(vector *v);
 

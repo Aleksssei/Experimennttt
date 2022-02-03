@@ -14,6 +14,7 @@
 #include <float.h>
 #include <errno.h>
 #include "libs/data_structures/vector/vector.h"
+#include <assert.h>
 
 void myStartupFun(void) __attribute__ ((constructor));
 
@@ -43,12 +44,53 @@ int majorityElement(int *a, size_t size) {
     return -1;
 }
 
+void test_pushBack_emptyVector(){
+    vector v = createVector(0);
+    pushBack(&v,5);
+    assert(v.size == 1);
+    assert(v.capacity == 1);
+    deleteVector(&v);
+}
+
+void test_pushBack_fullVector(){
+    vector v = createVector(5);
+    v.size = 5;
+    pushBack(&v,4);
+    assert(v.size==6);
+    assert(v.capacity == 10);
+    deleteVector(&v);
+}
+
+void test_popBack_notEmptyVector(){
+    vector v = createVector(0);
+    pushBack(&v,10);
+    assert(v.size == 1);
+    popBack(&v);
+    assert(v.size == 0);
+    assert(v.capacity ==1);
+    deleteVector(&v);
+}
+
+void test_popBack_emptyVector(){
+    vector v = createVector(5);
+    reserve(&v,0);
+    popBack(&v);
+}
+
+// "main" test function
+void test(){
+    test_pushBack_fullVector();
+    test_pushBack_emptyVector();
+    test_popBack_notEmptyVector();
+    printf("WORK");
+}
+
 int main() {
     //strerror(errno);
     //fprintf(stdout,"%s", strerror(errno));
 
     //printf("%s", __FILE__);
     // find the sum of subarray
-
+    test();
     return 0;
 }
