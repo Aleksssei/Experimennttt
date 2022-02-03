@@ -1,0 +1,8 @@
+D:/new c projects/cmake-build-debug/CMakeFiles/new_c_projects.dir
+D:/new c projects/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/new c projects/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/new c projects/cmake-build-debug/libs/CMakeFiles/edit_cache.dir
+D:/new c projects/cmake-build-debug/libs/CMakeFiles/rebuild_cache.dir
+D:/new c projects/cmake-build-debug/libs/data_structures/CMakeFiles/data_structures.dir
+D:/new c projects/cmake-build-debug/libs/data_structures/CMakeFiles/edit_cache.dir
+D:/new c projects/cmake-build-debug/libs/data_structures/CMakeFiles/rebuild_cache.dir

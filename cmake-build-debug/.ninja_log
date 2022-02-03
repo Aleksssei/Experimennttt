@@ -1,0 +1,26 @@
+# ninja log v5
+3	1648	6655920289307463	CMakeFiles/new_c_projects.dir/main.c.obj	33b4067b6f9c7107
+1653	1963	6655920292533486	new_c_projects.exe	2586bce33a46e2c7
+1	419	6655920642660625	build.ninja	9bddd08960b5e38a
+236	424	6655920277286378	libs/data_structures/libdata_structures.a	6253e114d24de3f6
+5	236	6655920275390104	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	31015aeda110b800
+22	155	6655920836846590	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	1b9946eab908e21c
+156	249	6655920837763804	libs/data_structures/libdata_structures.a	6253e114d24de3f6
+2	1276	6655920848012002	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1276	1490	6655920850178367	new_c_projects.exe	2586bce33a46e2c7
+2	1770	6655921822019301	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1770	1905	6655921823304465	new_c_projects.exe	2586bce33a46e2c7
+3	2235	6655934714728920	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+2235	2700	6655934719336082	new_c_projects.exe	2586bce33a46e2c7
+3	1852	6655935117147035	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1852	2002	6655935118568188	new_c_projects.exe	2586bce33a46e2c7
+2	1959	6655935352747028	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1960	2242	6655935355608270	new_c_projects.exe	2586bce33a46e2c7
+3	1204	6655937545188752	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1205	1332	6655937546468443	new_c_projects.exe	2586bce33a46e2c7
+3	1927	6655937761403217	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1927	2052	6655937762639167	new_c_projects.exe	2586bce33a46e2c7
+3	1511	6655938675655198	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1512	1792	6655938678364228	new_c_projects.exe	2586bce33a46e2c7
+3	1802	6655938802337977	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1803	1934	6655938803638098	new_c_projects.exe	2586bce33a46e2c7

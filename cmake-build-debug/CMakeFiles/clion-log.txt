@@ -1,0 +1,4 @@
+"D:\clion code IDE\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/clion code IDE/CLion 2021.2.1/bin/ninja/win/ninja.exe" -G Ninja "D:\new c projects"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/new c projects/cmake-build-debug
