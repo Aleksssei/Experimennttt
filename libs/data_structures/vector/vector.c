@@ -76,7 +76,7 @@ int *atVector(vector *v, size_t index) {
         fprintf(stderr, "a[%lld] is not exist", index);
         exit(1);
     }
-    return &(*(v->data + index));
+    return v->data + index;
 }
 
 int *back(vector *v) {
@@ -84,7 +84,7 @@ int *back(vector *v) {
         fprintf(stderr, "vector is empty");
         exit(1);
     }
-    return &v->data[v->size - 1];
+    return v->data + v->size -1;
 }
 
 int *front(vector *v) {

@@ -44,44 +44,68 @@ int majorityElement(int *a, size_t size) {
     return -1;
 }
 
-void test_pushBack_emptyVector(){
+void test_pushBack_emptyVector() {
     vector v = createVector(0);
-    pushBack(&v,5);
+    pushBack(&v, 5);
     assert(v.size == 1);
     assert(v.capacity == 1);
     deleteVector(&v);
 }
 
-void test_pushBack_fullVector(){
+void test_pushBack_fullVector() {
     vector v = createVector(5);
     v.size = 5;
-    pushBack(&v,4);
-    assert(v.size==6);
+    pushBack(&v, 4);
+    assert(v.size == 6);
     assert(v.capacity == 10);
     deleteVector(&v);
 }
 
-void test_popBack_notEmptyVector(){
+void test_popBack_notEmptyVector() {
     vector v = createVector(0);
-    pushBack(&v,10);
+    pushBack(&v, 10);
     assert(v.size == 1);
     popBack(&v);
     assert(v.size == 0);
-    assert(v.capacity ==1);
+    assert(v.capacity == 1);
     deleteVector(&v);
 }
 
-void test_popBack_emptyVector(){
+void test_popBack_emptyVector() {
     vector v = createVector(5);
-    reserve(&v,0);
+    reserve(&v, 0);
     popBack(&v);
 }
 
+void test_atVector_notEmptyVector() {
+    vector v = {{1, 2, 3, 4, 5}, 5, 10};
+    assert(atVector(&v, 0) == v.data);
+}
+
+void test_atVector_requestToLastElement() {
+    vector v = {{5, 4, 3, 2, 1}, 5, 12};
+    assert(atVector(&v, 4) == v.data + 4);
+}
+
+void test_back_oneElementInVector() {
+    vector v = {{1}, 1, 4};
+    assert(back(&v) == v.data + v.size -1);
+}
+
+void test_front_oneElementInVector(){
+    vector v = { {2},1,5};
+    assert(front(&v) == v.data);
+}
+
 // "main" test function
-void test(){
+void test() {
     test_pushBack_fullVector();
     test_pushBack_emptyVector();
     test_popBack_notEmptyVector();
+    test_atVector_notEmptyVector();
+    test_atVector_requestToLastElement();
+    test_back_oneElementInVector();
+    test_front_oneElementInVector();
     printf("WORK");
 }
 
