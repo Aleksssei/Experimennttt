@@ -106,7 +106,7 @@ void test() {
     test_atVector_requestToLastElement();
     test_back_oneElementInVector();
     test_front_oneElementInVector();
-    printf("WORK");
+    printf("Accepted");
 }
 
 int main() {
@@ -116,5 +116,6 @@ int main() {
     //printf("%s", __FILE__);
     // find the sum of subarray
     test();
+
     return 0;
 }
