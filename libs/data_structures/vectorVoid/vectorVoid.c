@@ -34,48 +34,55 @@ void clearV(vectorVoid *v) {
     v->size = 0;
 }
 
-void deleteVectorV (vectorVoid * v){
+void deleteVectorV(vectorVoid *v) {
     free(v->data);
 }
 
-bool isEmptyV (vectorVoid *v){
-    return v->data==NULL;
+bool isEmptyV(vectorVoid *v) {
+    return v->data == NULL;
 }
 
-bool isFullV ( vectorVoid * v){
+bool isFullV(vectorVoid *v) {
     return v->size == v->capacity;
 }
 
-void getVectorValueV ( vectorVoid * v,size_t index, void * dest){
-    char * source = (char*)v->data + index*v->baseTypeSize;
-    memmove(dest,source,v->baseTypeSize);
-}
-
-void setVectorValueV (vectorVoid *v, size_t index, void *source){
-    char * dest = (char*)v->data + index*v->baseTypeSize;
-    memmove(dest,source,v->baseTypeSize);
-}
-
-void popBackV ( vectorVoid * v){
-    if (isEmptyV(v)){
-        fprintf(stderr,"vector is empty");
+void getVectorValueV(vectorVoid *v, size_t index, void *dest) {
+    if (isEmptyV(v) || (int)index > (int)v->size - 1) { // условие index < 0 было удалено , так как
+        // индекс имеет тип size_t (при передаче индексу отрицательного значения мы будем получать очень большие числа, которые будут ликвидироваться оставшимся
+        // условием , то есть, (int)index > (int)v->size-1
+        fprintf(stderr, "Attempt to go beyond the allocated memory");
         exit(1);
     }
-    if ( v->size == 0){
-        return;
+    char *source = (char *) v->data + index * v->baseTypeSize;
+    memmove(dest, source, v->baseTypeSize);
+}
+
+void setVectorValueV(vectorVoid *v, size_t index, void *source) {
+    if (isEmptyV(v) || (int)index > (int)v->size - 1) {
+        fprintf(stderr, "Attempt to go beyond the allocated memory");
+        exit(1);
+    }
+    char *dest = (char *) v->data + index * v->baseTypeSize;
+    memmove(dest, source, v->baseTypeSize);
+}
+
+void popBackV(vectorVoid *v) {
+    if (isEmptyV(v) || v->size == 0) {
+        fprintf(stderr, "vector is empty");
+        exit(1);
     }
     --v->size;
 }
 
-void pushBackV(vectorVoid *v, void *source){
-    bool flag = v->size !=0;
+void pushBackV(vectorVoid *v, void *source) {
+    bool flag = v->capacity != 0;
     if (isFullV(v) && flag) {
         reserveV(v, 2 * v->size);
     }
-    v->capacity+= !flag;
+    v->capacity += !flag;
     ++v->size;
-    char *dest = (char*)v->data+(v->size-1)*v->baseTypeSize;
+    char *dest = (char *) v->data + (v->size - 1) * v->baseTypeSize;
     //memmove(&v->data[v->size-1],source,v->baseTypeSize);
-    memmove(dest,source,v->baseTypeSize);
+    memmove(dest, source, v->baseTypeSize);
 }
 

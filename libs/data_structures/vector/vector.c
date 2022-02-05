@@ -55,27 +55,24 @@ void append(int *a, size_t *size, int value) {
 }
 
 void pushBack(vector *v, int value) {
-    bool flag = v->size !=0;
+    bool flag = v->capacity != 0;
     if (isFull(v) && flag) {
         reserve(v, 2 * v->size);
     }
-    v->capacity+= !flag;
+    v->capacity += !flag;
     append(v->data, &v->size, value);
 }
 
 void popBack(vector *v) {
-    if (isEmpty(v)) {
+    if (isEmpty(v) || v->size == 0) {
         fprintf(stderr, "vector is empty");
         exit(1);
-    }
-    if ( v->size == 0){
-        return;
     }
     --v->size;
 }
 
 int *atVector(vector *v, size_t index) {
-    if (index > v->size - 1 || index < 0) {
+    if (isEmpty(v) || (int)index > (int)v->size - 1) {
         fprintf(stderr, "a[%lld] is not exist", index);
         exit(1);
     }
@@ -83,15 +80,15 @@ int *atVector(vector *v, size_t index) {
 }
 
 int *back(vector *v) {
-    if (isEmpty(v)) {
+    if (isEmpty(v) || v->size ==0) {
         fprintf(stderr, "vector is empty");
         exit(1);
     }
-    return v->data + v->size -1;
+    return v->data + v->size - 1;
 }
 
 int *front(vector *v) {
-    if (isEmpty(v)) {
+    if (isEmpty(v) || v->size ==0) {
         fprintf(stderr, "vector is empty");
         exit(1);
     }

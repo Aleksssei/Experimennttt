@@ -135,29 +135,114 @@ void uniSwap1(void *a, void *b, size_t size) {
     }
 }
 
+
+void test_pushBackV_emptyVectorV() {
+    vectorVoid v = createVectorV(0, sizeof(int));
+    int x = 10;
+    pushBackV(&v, &x);
+    assert(v.size == 1);
+    assert(v.capacity == 1);
+    deleteVectorV(&v);
+}
+
+void test_pushBackV_fullVectorV() {
+    vectorVoid v = createVectorV(10, sizeof(int));
+    v.size = v.capacity;
+    int x = 15;
+    pushBackV(&v, &x);
+    assert(v.size == 11);
+    assert(v.capacity == 20);
+    deleteVectorV(&v);
+}
+
+void test_popBackV_fullVectorV() {
+    vectorVoid v = createVectorV(10, sizeof(int));
+    v.size = v.capacity;
+    popBackV(&v);
+    assert(v.size == 9);
+    assert(v.capacity == 10);
+    deleteVectorV(&v);
+}
+
+void test_popBackV_notEmptyVectorV() {
+    vectorVoid v = createVectorV(5, sizeof(int));
+    int value = 5;
+    pushBackV(&v, &value);
+    assert(v.size == 1);
+    assert(v.capacity == 5);
+    popBackV(&v);
+    assert(v.size == 0);
+    assert(v.capacity == 5);
+    deleteVectorV(&v);
+}
+
+void test_getVectorValueV_fullVectorV() {
+    vectorVoid v = createVectorV(0, sizeof(int));
+    int x = 10;
+    pushBackV(&v, &x);
+    assert(v.size == 1);
+    assert(v.capacity == 1);
+    int res;
+    getVectorValueV(&v, 0, &res);
+    assert(res == x);
+    deleteVectorV(&v);
+}
+
+void test_getVectorValueV_notEmptyVectorV() {
+    vectorVoid v = createVectorV(4, sizeof(int));
+    int x = 10;
+    pushBackV(&v, &x);
+    assert(v.size == 1);
+    assert(v.capacity == 4);
+    int res;
+    getVectorValueV(&v, 0, &res);
+    assert(res == x);
+    deleteVectorV(&v);
+}
+
+void test_setVectorValueV_fullVectorV() {
+    vectorVoid v = createVectorV(0, sizeof(int));
+    int value = 10;
+    pushBackV(&v, &value);
+    assert(v.size == 1);
+    assert(v.capacity == 1);
+    int x = 15;
+    setVectorValueV(&v, 0, &x);
+    assert(*((int *) v.data) == x);
+    deleteVectorV(&v);
+}
+
+void test_setVectorValueV_notEmptyVectorV() {
+    vectorVoid v = createVectorV(8, sizeof(int));
+    int value = 10;
+    pushBackV(&v, &value);
+    assert(v.size == 1);
+    assert(v.capacity == 8);
+    int x = 15;
+    setVectorValueV(&v, 0, &x);
+    assert(*((int *) v.data) == x);
+    deleteVectorV(&v);
+}
+
+// "main" vectorVoid function test
+void test() {
+    test_pushBackV_emptyVectorV();
+    test_pushBackV_fullVectorV();
+    test_popBackV_fullVectorV();
+    test_popBackV_notEmptyVectorV();
+    test_getVectorValueV_fullVectorV();
+    test_getVectorValueV_notEmptyVectorV();
+    test_setVectorValueV_fullVectorV();
+    test_setVectorValueV_notEmptyVectorV();
+    printf("Accepted");
+}
+
 int main() {
     //strerror(errno);
     //fprintf(stdout,"%s", strerror(errno));
 
     //printf("%s", __FILE__);
     // find the sum of subarray
-    size_t n;
-    scanf("%zd", &n);
-
-    vectorVoid v = createVectorV(0, sizeof(float));
-    for (int i = 0; i < n; i++) {
-        float x;
-        scanf("%f", &x);
-
-        pushBackV(&v, &x);
-    }
-
-    for (int i = 0; i < n; i++) {
-        float x;
-        getVectorValueV(&v, i, &x);
-
-        printf("%f ", x);
-    }
-
+    test();
     return 0;
 }

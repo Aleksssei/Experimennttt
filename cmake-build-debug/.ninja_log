@@ -1,13 +1,11 @@
 # ninja log v5
-2	851	6657528813608138	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
-182	274	6657529256435653	new_c_projects.exe	2586bce33a46e2c7
-119	182	6657529255577714	libs/data_structures/libdata_structures.a	6253e114d24de3f6
-1	419	6657529930446767	build.ninja	9bddd08960b5e38a
-3	119	6657529254959973	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	1b9946eab908e21c
-21	161	6657528203744588	libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.c.obj	94e10450fc2eec17
-42	360	6657642571484899	libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.c.obj	94e10450fc2eec17
-361	769	6657642575854924	libs/data_structures/libdata_structures.a	5cc9a1225faff1d5
-2	1313	6657642581709225	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
-1313	1453	6657642583104988	new_c_projects.exe	2586bce33a46e2c7
-2	823	6657644614902955	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
-823	917	6657644615775989	new_c_projects.exe	2586bce33a46e2c7
+3	1961	6657741092973552	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+263	465	6657741377238567	new_c_projects.exe	2586bce33a46e2c7
+164	263	6657741375164911	libs/data_structures/libdata_structures.a	6253e114d24de3f6
+1	419	6657741653575735	build.ninja	9bddd08960b5e38a
+3	163	6657741374197079	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	1b9946eab908e21c
+3	153	6657735649317484	libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.c.obj	94e10450fc2eec17
+29	176	6657741898101526	libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.c.obj	94e10450fc2eec17
+176	285	6657741899189907	libs/data_structures/libdata_structures.a	5cc9a1225faff1d5
+3	1583	6657741912150343	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+1584	1772	6657741914031844	new_c_projects.exe	2586bce33a46e2c7
