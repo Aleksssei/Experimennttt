@@ -14,6 +14,7 @@
 #include <float.h>
 #include <errno.h>
 #include "libs/data_structures/vector/vector.h"
+#include "libs/data_structures//vectorVoid/vectorVoid.h"
 #include <assert.h>
 
 void myStartupFun(void) __attribute__ ((constructor));
@@ -115,7 +116,7 @@ int main() {
 
     //printf("%s", __FILE__);
     // find the sum of subarray
-    test();
+    vectorVoid v;
 
     return 0;
 }

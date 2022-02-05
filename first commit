@@ -1,0 +1,41 @@
+[33mcommit ee09274003521d97bb77d9ee1efca5e245b3d5be[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Aleksssei <alekseistarodubov1@yandex.ru>
+Date:   Fri Feb 4 19:36:50 2022 +0300
+
+    refactoring
+
+ libs/data_structures/vector/vector.c | 2 [32m+[m[31m-[m
+ main.c                               | 3 [32m++[m[31m-[m
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+[33mcommit 178529e86fd72d08013090f292bc9048ad650015[m
+Author: Aleksssei <alekseistarodubov1@yandex.ru>
+Date:   Thu Feb 3 20:04:48 2022 +0300
+
+    append access functions
+
+ libs/data_structures/vector/vector.c |  4 [32m++[m[31m--[m
+ main.c                               | 46 [32m+++++++++++++++++++++++++++[m[31m---------[m
+ 2 files changed, 37 insertions(+), 13 deletions(-)
+
+[33mcommit 550d745ba6dc5907da650ab75efdd03599e43edf[m
+Author: Aleksssei <alekseistarodubov1@yandex.ru>
+Date:   Thu Feb 3 19:36:43 2022 +0300
+
+    append push / pop functions
+
+ libs/data_structures/vector/vector.c |  8 [32m++++[m[31m---[m
+ libs/data_structures/vector/vector.h |  2 [32m+[m[31m-[m
+ main.c                               | 44 [32m+++++++++++++++++++++++++++++++++++[m[31m-[m
+ 3 files changed, 49 insertions(+), 5 deletions(-)
+
+[33mcommit b929e33889bc8023ce1a335363cc32bd49ec0259[m
+Author: Aleksssei <alekseistarodubov1@yandex.ru>
+Date:   Thu Feb 3 15:46:41 2022 +0300
+
+    first commit
+
+ libs/data_structures/vector/vector.c | 94 [32m++++++++++++++++++++++++++++++++++++[m
+ libs/data_structures/vector/vector.h | 39 [32m+++++++++++++++[m
+ main.c                               | 54 [32m+++++++++++++++++++++[m
+ 3 files changed, 187 insertions(+)
