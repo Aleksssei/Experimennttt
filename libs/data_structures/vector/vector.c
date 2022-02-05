@@ -65,8 +65,11 @@ void pushBack(vector *v, int value) {
 
 void popBack(vector *v) {
     if (isEmpty(v)) {
-        fprintf(stderr, "bad alloc");
+        fprintf(stderr, "vector is empty");
         exit(1);
+    }
+    if ( v->size == 0){
+        return;
     }
     --v->size;
 }

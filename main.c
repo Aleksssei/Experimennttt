@@ -112,26 +112,26 @@ void test() {
 }
 */
 
-void uniSwap (void * a , void *b,size_t size){
+void uniSwap(void *a, void *b, size_t size) {
     void *v3 = malloc(size);
-    if (v3 != NULL){
-        memmove(v3,a,size);
-        memmove(a,b,size);
-        memmove(b,v3,size);
+    if (v3 != NULL) {
+        memmove(v3, a, size);
+        memmove(a, b, size);
+        memmove(b, v3, size);
         free(v3);
     }
 }
 
-void uniSwap1 (void *a , void * b, size_t size){
-    char * tmp = (char*)malloc(size);
-    for ( int i = 0; i < size; ++i){
-        tmp[i] = *((char*)a +i);
+void uniSwap1(void *a, void *b, size_t size) {
+    char *tmp = (char *) malloc(size);
+    for (int i = 0; i < size; ++i) {
+        tmp[i] = *((char *) a + i);
     }
-    for (int i = 0; i <  size; ++i){
-        *((char*)a +i) = *((char*)b+i);
+    for (int i = 0; i < size; ++i) {
+        *((char *) a + i) = *((char *) b + i);
     }
-    for ( int i = 0; i < size; ++i){
-        *((char*)b+i) = tmp[i];
+    for (int i = 0; i < size; ++i) {
+        *((char *) b + i) = tmp[i];
     }
 }
 
@@ -141,6 +141,23 @@ int main() {
 
     //printf("%s", __FILE__);
     // find the sum of subarray
+    size_t n;
+    scanf("%zd", &n);
+
+    vectorVoid v = createVectorV(0, sizeof(float));
+    for (int i = 0; i < n; i++) {
+        float x;
+        scanf("%f", &x);
+
+        pushBackV(&v, &x);
+    }
+
+    for (int i = 0; i < n; i++) {
+        float x;
+        getVectorValueV(&v, i, &x);
+
+        printf("%f ", x);
+    }
 
     return 0;
 }
