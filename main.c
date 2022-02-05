@@ -45,6 +45,7 @@ int majorityElement(int *a, size_t size) {
     return -1;
 }
 
+/*
 void test_pushBack_emptyVector() {
     vector v = createVector(0);
     pushBack(&v, 5);
@@ -109,6 +110,30 @@ void test() {
     test_front_oneElementInVector();
     printf("Accepted");
 }
+*/
+
+void uniSwap (void * a , void *b,size_t size){
+    void *v3 = malloc(size);
+    if (v3 != NULL){
+        memmove(v3,a,size);
+        memmove(a,b,size);
+        memmove(b,v3,size);
+        free(v3);
+    }
+}
+
+void uniSwap1 (void *a , void * b, size_t size){
+    char * tmp = (char*)malloc(size);
+    for ( int i = 0; i < size; ++i){
+        tmp[i] = *((char*)a +i);
+    }
+    for (int i = 0; i <  size; ++i){
+        *((char*)a +i) = *((char*)b+i);
+    }
+    for ( int i = 0; i < size; ++i){
+        *((char*)b+i) = tmp[i];
+    }
+}
 
 int main() {
     //strerror(errno);
@@ -116,7 +141,6 @@ int main() {
 
     //printf("%s", __FILE__);
     // find the sum of subarray
-    vectorVoid v;
 
     return 0;
 }

@@ -1,10 +1,4 @@
 "D:\clion code IDE\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/clion code IDE/CLion 2021.2.1/bin/ninja/win/ninja.exe" -G Ninja "D:\new c projects"
-CMake Error at libs/data_structures/CMakeLists.txt:2 (add_library):
-  add_library cannot create target "data_structures" because another target
-  with the same name already exists.  The existing target is a static library
-  created in source directory "D:/new c projects/libs/data_structures".  See
-  documentation for policy CMP0002 for more details.
-
-
--- Configuring incomplete, errors occurred!
-See also "D:/new c projects/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/new c projects/cmake-build-debug
