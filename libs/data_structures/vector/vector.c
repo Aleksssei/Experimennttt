@@ -30,15 +30,15 @@ void clear(vector *v) {
 }
 
 void shrinkToFit(vector *v) {
-    v->data = (int *) realloc(v->data, sizeof(int) * v->size);
+    reserve(v,v->size);
 }
 
 void deleteVector(vector *v) {
-    free(v->data);
+    reserve(v,0);
 }
 
 bool isEmpty(vector *v) {
-    return v->data == NULL;
+    return v->size==0;
 }
 
 bool isFull(vector *v) {
@@ -64,7 +64,7 @@ void pushBack(vector *v, int value) {
 }
 
 void popBack(vector *v) {
-    if (isEmpty(v) || v->size == 0) {
+    if (isEmpty(v)) {
         fprintf(stderr, "vector is empty");
         exit(1);
     }
@@ -80,17 +80,9 @@ int *atVector(vector *v, size_t index) {
 }
 
 int *back(vector *v) {
-    if (isEmpty(v) || v->size ==0) {
-        fprintf(stderr, "vector is empty");
-        exit(1);
-    }
-    return v->data + v->size - 1;
+    return atVector(v,v->size-1);
 }
 
 int *front(vector *v) {
-    if (isEmpty(v) || v->size ==0) {
-        fprintf(stderr, "vector is empty");
-        exit(1);
-    }
-    return v->data;
+    return atVector(v,0);
 }

@@ -27,7 +27,7 @@ void reserveV(vectorVoid *v, size_t newCapacity) {
 }
 
 void shrinkToFitV(vectorVoid *v) {
-    v->data = realloc(v->data, v->baseTypeSize * v->size);
+    reserveV(v, v->size);
 }
 
 void clearV(vectorVoid *v) {
@@ -35,11 +35,11 @@ void clearV(vectorVoid *v) {
 }
 
 void deleteVectorV(vectorVoid *v) {
-    free(v->data);
+    reserveV(v, 0);
 }
 
 bool isEmptyV(vectorVoid *v) {
-    return v->data == NULL;
+    return v->size == 0;
 }
 
 bool isFullV(vectorVoid *v) {
@@ -47,9 +47,7 @@ bool isFullV(vectorVoid *v) {
 }
 
 void getVectorValueV(vectorVoid *v, size_t index, void *dest) {
-    if (isEmptyV(v) || (int)index > (int)v->size - 1) { // условие index < 0 было удалено , так как
-        // индекс имеет тип size_t (при передаче индексу отрицательного значения мы будем получать очень большие числа, которые будут ликвидироваться оставшимся
-        // условием , то есть, (int)index > (int)v->size-1
+    if (isEmptyV(v) || (int) index > (int) v->size - 1) {
         fprintf(stderr, "Attempt to go beyond the allocated memory");
         exit(1);
     }
@@ -58,7 +56,7 @@ void getVectorValueV(vectorVoid *v, size_t index, void *dest) {
 }
 
 void setVectorValueV(vectorVoid *v, size_t index, void *source) {
-    if (isEmptyV(v) || (int)index > (int)v->size - 1) {
+    if (isEmptyV(v) || (int) index > (int) v->size - 1) {
         fprintf(stderr, "Attempt to go beyond the allocated memory");
         exit(1);
     }
@@ -67,7 +65,7 @@ void setVectorValueV(vectorVoid *v, size_t index, void *source) {
 }
 
 void popBackV(vectorVoid *v) {
-    if (isEmptyV(v) || v->size == 0) {
+    if (isEmptyV(v)) {
         fprintf(stderr, "vector is empty");
         exit(1);
     }
@@ -82,7 +80,6 @@ void pushBackV(vectorVoid *v, void *source) {
     v->capacity += !flag;
     ++v->size;
     char *dest = (char *) v->data + (v->size - 1) * v->baseTypeSize;
-    //memmove(&v->data[v->size-1],source,v->baseTypeSize);
     memmove(dest, source, v->baseTypeSize);
 }
 

@@ -47,7 +47,7 @@ cmake_ninja_workdir = D$:/new$ c$ projects/cmake-build-debug/
 #############################################
 # Order-only phony target for new_c_projects
 
-build cmake_object_order_depends_target_new_c_projects: phony || cmake_object_order_depends_target_data_structures
+build cmake_object_order_depends_target_new_c_projects: phony || cmake_object_order_depends_target_algorithms cmake_object_order_depends_target_data_structures
 
 build CMakeFiles/new_c_projects.dir/main.c.obj: C_COMPILER__new_c_projects_Debug D$:/new$ c$ projects/main.c || cmake_object_order_depends_target_new_c_projects
   DEP_FILE = CMakeFiles\new_c_projects.dir\main.c.obj.d
@@ -63,9 +63,9 @@ build CMakeFiles/new_c_projects.dir/main.c.obj: C_COMPILER__new_c_projects_Debug
 #############################################
 # Link the executable new_c_projects.exe
 
-build new_c_projects.exe: C_EXECUTABLE_LINKER__new_c_projects_Debug CMakeFiles/new_c_projects.dir/main.c.obj | libs/data_structures/libdata_structures.a || libs/data_structures/libdata_structures.a
+build new_c_projects.exe: C_EXECUTABLE_LINKER__new_c_projects_Debug CMakeFiles/new_c_projects.dir/main.c.obj | libs/data_structures/libdata_structures.a libs/algorithms/libalgorithms.a || libs/algorithms/libalgorithms.a libs/data_structures/libdata_structures.a
   FLAGS = -g
-  LINK_LIBRARIES = libs/data_structures/libdata_structures.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = libs/data_structures/libdata_structures.a  libs/algorithms/libalgorithms.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\new_c_projects.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -136,13 +136,13 @@ build libs/rebuild_cache: phony libs/CMakeFiles/rebuild_cache.util
 #############################################
 # Order-only phony target for data_structures
 
-build cmake_object_order_depends_target_data_structures: phony || libs/data_structures/CMakeFiles/data_structures.dir
+build cmake_object_order_depends_target_data_structures: phony || cmake_object_order_depends_target_algorithms
 
-build libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.c.obj: C_COMPILER__data_structures_Debug D$:/new$ c$ projects/libs/data_structures/vectorVoid/vectorVoid.c || cmake_object_order_depends_target_data_structures
-  DEP_FILE = libs\data_structures\CMakeFiles\data_structures.dir\vectorVoid\vectorVoid.c.obj.d
+build libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj: C_COMPILER__data_structures_Debug D$:/new$ c$ projects/libs/data_structures/matrix/matrix.c || cmake_object_order_depends_target_data_structures
+  DEP_FILE = libs\data_structures\CMakeFiles\data_structures.dir\matrix\matrix.c.obj.d
   FLAGS = -g -std=gnu11
   OBJECT_DIR = libs\data_structures\CMakeFiles\data_structures.dir
-  OBJECT_FILE_DIR = libs\data_structures\CMakeFiles\data_structures.dir\vectorVoid
+  OBJECT_FILE_DIR = libs\data_structures\CMakeFiles\data_structures.dir\matrix
 
 
 # =============================================================================
@@ -152,7 +152,7 @@ build libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.
 #############################################
 # Link the static library libs\data_structures\libdata_structures.a
 
-build libs/data_structures/libdata_structures.a: C_STATIC_LIBRARY_LINKER__data_structures_Debug libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.c.obj
+build libs/data_structures/libdata_structures.a: C_STATIC_LIBRARY_LINKER__data_structures_Debug libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj || libs/algorithms/libalgorithms.a
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = libs\data_structures\CMakeFiles\data_structures.dir
   POST_BUILD = cd .
@@ -184,9 +184,72 @@ build libs/data_structures/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build libs/data_structures/rebuild_cache: phony libs/data_structures/CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# D:/new c projects/libs/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target algorithms
+
+
+#############################################
+# Order-only phony target for algorithms
+
+build cmake_object_order_depends_target_algorithms: phony || libs/algorithms/CMakeFiles/algorithms.dir
+
+build libs/algorithms/CMakeFiles/algorithms.dir/algorithm/array.c.obj: C_COMPILER__algorithms_Debug D$:/new$ c$ projects/libs/algorithms/algorithm/array.c || cmake_object_order_depends_target_algorithms
+  DEP_FILE = libs\algorithms\CMakeFiles\algorithms.dir\algorithm\array.c.obj.d
+  FLAGS = -g -std=gnu11
+  OBJECT_DIR = libs\algorithms\CMakeFiles\algorithms.dir
+  OBJECT_FILE_DIR = libs\algorithms\CMakeFiles\algorithms.dir\algorithm
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target algorithms
+
+
+#############################################
+# Link the static library libs\algorithms\libalgorithms.a
+
+build libs/algorithms/libalgorithms.a: C_STATIC_LIBRARY_LINKER__algorithms_Debug libs/algorithms/CMakeFiles/algorithms.dir/algorithm/array.c.obj
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = libs\algorithms\CMakeFiles\algorithms.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libs\algorithms\libalgorithms.a
+  TARGET_PDB = algorithms.a.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build libs/algorithms/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D "D:\new c projects\cmake-build-debug\libs\algorithms" && "D:\clion code IDE\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build libs/algorithms/edit_cache: phony libs/algorithms/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build libs/algorithms/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D "D:\new c projects\cmake-build-debug\libs\algorithms" && "D:\clion code IDE\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -S"D:\new c projects" -B"D:\new c projects\cmake-build-debug""
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build libs/algorithms/rebuild_cache: phony libs/algorithms/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
 
+build algorithms: phony libs/algorithms/libalgorithms.a
+
 build data_structures: phony libs/data_structures/libdata_structures.a
+
+build libalgorithms.a: phony libs/algorithms/libalgorithms.a
 
 build libdata_structures.a: phony libs/data_structures/libdata_structures.a
 
@@ -207,7 +270,14 @@ build all: phony new_c_projects.exe libs/all
 #############################################
 # Folder: D:/new c projects/cmake-build-debug/libs
 
-build libs/all: phony libs/data_structures/all
+build libs/all: phony libs/data_structures/all libs/algorithms/all
+
+# =============================================================================
+
+#############################################
+# Folder: D:/new c projects/cmake-build-debug/libs/algorithms
+
+build libs/algorithms/all: phony libs/algorithms/libalgorithms.a
 
 # =============================================================================
 
@@ -223,14 +293,14 @@ build libs/data_structures/all: phony libs/data_structures/libdata_structures.a
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../libs/CMakeLists.txt ../libs/data_structures/CMakeLists.txt CMakeCache.txt CMakeFiles/3.21.1/CMakeCCompiler.cmake CMakeFiles/3.21.1/CMakeRCCompiler.cmake CMakeFiles/3.21.1/CMakeSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeGenericSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeRCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C-ABI.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-windres.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/WindowsPaths.cmake
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../libs/CMakeLists.txt ../libs/algorithms/CMakeLists.txt ../libs/data_structures/CMakeLists.txt CMakeCache.txt CMakeFiles/3.21.1/CMakeCCompiler.cmake CMakeFiles/3.21.1/CMakeRCCompiler.cmake CMakeFiles/3.21.1/CMakeSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeGenericSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeRCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C-ABI.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-windres.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/WindowsPaths.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt ../libs/CMakeLists.txt ../libs/data_structures/CMakeLists.txt CMakeCache.txt CMakeFiles/3.21.1/CMakeCCompiler.cmake CMakeFiles/3.21.1/CMakeRCCompiler.cmake CMakeFiles/3.21.1/CMakeSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeGenericSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeRCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C-ABI.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-windres.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/WindowsPaths.cmake: phony
+build ../CMakeLists.txt ../libs/CMakeLists.txt ../libs/algorithms/CMakeLists.txt ../libs/data_structures/CMakeLists.txt CMakeCache.txt CMakeFiles/3.21.1/CMakeCCompiler.cmake CMakeFiles/3.21.1/CMakeRCCompiler.cmake CMakeFiles/3.21.1/CMakeSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeGenericSystem.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeRCInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Compiler/GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C-ABI.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU-C.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-GNU.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows-windres.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/Windows.cmake D$:/clion$ code$ IDE/CLion$ 2021.2.1/bin/cmake/win/share/cmake-3.21/Modules/Platform/WindowsPaths.cmake: phony
 
 
 #############################################

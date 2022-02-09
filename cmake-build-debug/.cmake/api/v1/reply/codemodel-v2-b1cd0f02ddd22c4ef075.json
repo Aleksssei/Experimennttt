@@ -19,14 +19,15 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						1
+						2
 					]
 				},
 				{
 					"build" : "libs",
 					"childIndexes" : 
 					[
-						2
+						2,
+						3
 					],
 					"jsonFile" : "directory-libs-Debug-dd7a5ca29a7a50124f40.json",
 					"minimumCMakeVersion" : 
@@ -49,6 +50,21 @@
 					"source" : "libs/data_structures",
 					"targetIndexes" : 
 					[
+						1
+					]
+				},
+				{
+					"build" : "libs/algorithms",
+					"jsonFile" : "directory-libs.algorithms-Debug-82761d2213cf66600325.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.21"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "libs/algorithms",
+					"targetIndexes" : 
+					[
 						0
 					]
 				}
@@ -61,29 +77,38 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3
 					],
 					"name" : "new_c_projects",
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
 			"targets" : 
 			[
 				{
+					"directoryIndex" : 3,
+					"id" : "algorithms::@4f84be16bc75261b2db5",
+					"jsonFile" : "target-algorithms-Debug-63525786279b0cc3db6d.json",
+					"name" : "algorithms",
+					"projectIndex" : 0
+				},
+				{
 					"directoryIndex" : 2,
 					"id" : "data_structures::@396ab3a44f37844d7cdb",
-					"jsonFile" : "target-data_structures-Debug-d471043b5eb1ed2d71a2.json",
+					"jsonFile" : "target-data_structures-Debug-e73c4c33a455193d3bc4.json",
 					"name" : "data_structures",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "new_c_projects::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-new_c_projects-Debug-bcf0434d276406d346e5.json",
+					"jsonFile" : "target-new_c_projects-Debug-48e8310fb15ac906f9b3.json",
 					"name" : "new_c_projects",
 					"projectIndex" : 0
 				}
