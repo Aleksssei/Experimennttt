@@ -178,26 +178,47 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
     long long sum = 0;
     for (int i = 1; i < m.nCols; ++i) {
         int maxValue = m.values[0][i];
-        for (int j = i+1; j < m.nCols; ++j) {
+        for (int j = i + 1; j < m.nCols; ++j) {
             maxValue = max(maxValue, m.values[j - 1][j]);
         }
         sum += maxValue;
     }
-    for ( int i = 1; i < m.nRows; ++i){
+    for (int i = 1; i < m.nRows; ++i) {
         int maxValue1 = m.values[i][0];
-        for ( int j = i+1; j < m.nRows; ++j){
-            maxValue1 = max(maxValue1,m.values[j][j-1]);
+        for (int j = i + 1; j < m.nRows; ++j) {
+            maxValue1 = max(maxValue1, m.values[j][j - 1]);
         }
-        sum+=maxValue1;
+        sum += maxValue1;
     }
     return sum;
 }
 
+int getMinInArea(matrix m) {
+    position maxValue = getMaxValuePos(m);
+    int minValue = m.values[maxValue.rowIndex][maxValue.colIndex];
+    int firstColIndex = maxValue.colIndex;
+    int secondColIndex = maxValue.colIndex;
+    for (int i = maxValue.rowIndex - 1; i >= 0; --i) {
+        if (secondColIndex + 1 > m.nCols - 1) {
+            secondColIndex = m.nCols - 1;
+        } else {
+            ++secondColIndex;
+        }
+        if (firstColIndex - 1 < 0) {
+            firstColIndex = 0;
+        } else {
+            --firstColIndex;
+        }
+        minValue = min(minValue, getMinValue(m.values[i] + firstColIndex, secondColIndex + 1));
+    }
+    return minValue;
+}
+
 int main() {
-    matrix m = getMemMatrix(3, 3);
+    matrix m = getMemMatrix(3, 4);
     inputMatrix(m);
-    printf("%lld", findSumOfMaxesOfPseudoDiagonal(m));
-    //outputMatrix(m);
+    printf("%d", getMinInArea(m));
+    outputMatrix(m);
     freeMemMatrix(m);
     return 0;
 }
