@@ -257,10 +257,38 @@ int countEqClassesByRowsSum(matrix m) {
     return count;
 }
 
+int *getSubArray(matrix m, int j) {
+    int *subArray = (int *) malloc(sizeof *(*m.values) * m.nRows);
+    for (int i = 0; i < m.nRows; ++i) {
+        subArray[i] = m.values[i][j];
+    }
+    return subArray;
+}
+
+int getNSpecialElement(matrix m) {
+    int count = 0;
+    for (int i = 0; i < m.nCols; ++i) {
+        int *subArray = getSubArray(m, i);
+        int maxElement = getMaxValue(subArray, m.nRows);
+        long long sum = 0;
+        for ( int j = 0; j < m.nRows; ++j){
+            if (subArray[j] ==maxElement){
+                continue;
+            }
+            sum+=subArray[j];
+        }
+        if (maxElement > sum){
+            ++count;
+        }
+        free(subArray);
+    }
+    return count;
+}
+
 int main() {
-    matrix m = getMemMatrix(6, 2);
+    matrix m = getMemMatrix(3, 4);
     inputMatrix(m);
-    printf("%d", countEqClassesByRowsSum(m));
+    printf("%d", getNSpecialElement(m));
     //outputMatrix(m);
     freeMemMatrix(m);
     return 0;
