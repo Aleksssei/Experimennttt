@@ -166,19 +166,38 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix *m) {
     transposeMatrix(m);
 }
 
-bool isMutuallyInverseMatrix(matrix m1, matrix m2){
-    matrix result = multiplyOfTwoMatrix(m1,m2);
-    if (isEMatrix(result)){
+bool isMutuallyInverseMatrix(matrix m1, matrix m2) {
+    matrix result = multiplyOfTwoMatrix(m1, m2);
+    if (isEMatrix(result)) {
         return true;
     }
     return false;
 }
 
-// solve with help of transpose
+long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
+    long long sum = 0;
+    for (int i = 1; i < m.nCols; ++i) {
+        int maxValue = m.values[0][i];
+        for (int j = i+1; j < m.nCols; ++j) {
+            maxValue = max(maxValue, m.values[j - 1][j]);
+        }
+        sum += maxValue;
+    }
+    for ( int i = 1; i < m.nRows; ++i){
+        int maxValue1 = m.values[i][0];
+        for ( int j = i+1; j < m.nRows; ++j){
+            maxValue1 = max(maxValue1,m.values[j][j-1]);
+        }
+        sum+=maxValue1;
+    }
+    return sum;
+}
 
 int main() {
     matrix m = getMemMatrix(3, 3);
-    outputMatrix(m);
+    inputMatrix(m);
+    printf("%lld", findSumOfMaxesOfPseudoDiagonal(m));
+    //outputMatrix(m);
     freeMemMatrix(m);
     return 0;
 }
