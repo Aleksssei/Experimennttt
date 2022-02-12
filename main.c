@@ -14,6 +14,8 @@
 #include <float.h>
 #include <errno.h>
 #include <assert.h>
+#include "libs/data_structures/matrix/matrix.h"
+#include "libs/algorithms/algorithm/array.h"
 
 void myStartupFun(void) __attribute__ ((constructor));
 
@@ -88,6 +90,95 @@ long long getSumOfSubSegment(int *a, int size, int l, int r) {
     return sum;
 }
 
+int sum(int *a, int size) {
+    int sum = 0;
+    for (int i = 0; i < size; ++i) {
+        sum += a[i];
+    }
+    return sum;
+}
+
+int maxValue(int a, int b) {
+    return a > b ? a : b;
+}
+
+void solveFirst(matrix m) {
+    position minElement = getMinValuePos(m);
+    position maxElement = getMaxValuePos(m);
+    swapRows(m, minElement.rowIndex, maxElement.rowIndex);
+}
+
+int getMaxValue(int *a, int size) {
+    int maxValue = a[0];
+    for (int i = 0; i < size; ++i) {
+        if (a[i] > maxValue) {
+            maxValue = a[i];
+        }
+    }
+    return maxValue;
+}
+
+void SortRowsByMaxElement(matrix m) {
+    insertionSortRowsMatrixByRowCriteria(m, getMaxValue);
+}
+
+int getMinValue(int *a, int size) {
+    int minValue = a[0];
+    for (int i = 0; i < size; ++i) {
+        if (a[i] < minValue) {
+            minValue = a[i];
+        }
+    }
+    return minValue;
+}
+
+void sortColsByMinElement(matrix m) {
+    insertionSortColsMatrixByColCriteria(m, getMinValue);
+}
+
+void getSquareOfMatrixIfSymmetrical(matrix *m) {
+    if (isSymmetricalMatrix(*m)) {
+        *m = multiplyOfTwoMatrix(*m, *m);
+    } else {
+        fprintf(stderr, "matrix is not symmetrical");
+        exit(1);
+    }
+}
+
+long long getSum(int *a, int size) {
+    long long sum = 0;
+    for (int i = 0; i < size; ++i) {
+        sum += a[i];
+    }
+    return sum;
+}
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix *m) {
+    for (int i = 0; i < m->nRows - 1; ++i) {
+        long long oneRowSum = getSum(m->values[i], m->nCols);
+        for (int j = i + 1; j < m->nRows; ++j) {
+            long long sum = getSum(m->values[j], m->nCols);
+            if (oneRowSum == sum) {
+                return;
+            }
+        }
+    }
+    transposeMatrix(m);
+}
+
+bool isMutuallyInverseMatrix(matrix m1, matrix m2){
+    matrix result = multiplyOfTwoMatrix(m1,m2);
+    if (isEMatrix(result)){
+        return true;
+    }
+    return false;
+}
+
+// solve with help of transpose
+
 int main() {
+    matrix m = getMemMatrix(3, 3);
+    outputMatrix(m);
+    freeMemMatrix(m);
     return 0;
 }
