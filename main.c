@@ -232,15 +232,36 @@ void insertionSortRowsMatrixByRowCriteriaD(matrix m, double (*criteria)(int *, i
     }
 }
 
-void sortByDistance (matrix m){
-    insertionSortRowsMatrixByRowCriteriaD(m,getDistance);
+void sortByDistance(matrix m) {
+    insertionSortRowsMatrixByRowCriteriaD(m, getDistance);
+}
+
+int countEqClassesByRowsSum(matrix m) {
+    insertionSortRowsMatrixByRowCriteria(m, getSum);
+    int count = 0;
+    long long prevSum = LONG_LONG_MAX;
+    for (int i = 0; i < m.nRows - 1; ++i) {
+        long long sum = getSum(m.values[i], m.nCols);
+        if (sum == prevSum) {
+            continue;
+        }
+        for (int j = i + 1; j < m.nRows; ++j) {
+            long long summary = getSum(m.values[j], m.nCols);
+            if (summary == sum) {
+                ++count;
+                break;
+            }
+        }
+        prevSum = sum;
+    }
+    return count;
 }
 
 int main() {
-    matrix m = getMemMatrix(3, 3);
+    matrix m = getMemMatrix(6, 2);
     inputMatrix(m);
-    sortByDistance(m);
-    outputMatrix(m);
+    printf("%d", countEqClassesByRowsSum(m));
+    //outputMatrix(m);
     freeMemMatrix(m);
     return 0;
 }
