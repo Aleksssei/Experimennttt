@@ -214,10 +214,32 @@ int getMinInArea(matrix m) {
     return minValue;
 }
 
+double getDistance(int *a, int size) {
+    long long sum = 0;
+    for (int i = 0; i < size; ++i) {
+        sum += a[i];
+    }
+    return sqrt(sum);
+}
+
+void insertionSortRowsMatrixByRowCriteriaD(matrix m, double (*criteria)(int *, int)) {
+    for (int i = 1; i < m.nRows; ++i) {
+        for (int j = i; j > 0; --j) {
+            if (criteria(m.values[j - 1], m.nCols) - criteria(m.values[j], m.nCols) > DBL_EPSILON) {
+                swapRows(m, j - 1, j);
+            }
+        }
+    }
+}
+
+void sortByDistance (matrix m){
+    insertionSortRowsMatrixByRowCriteriaD(m,getDistance);
+}
+
 int main() {
-    matrix m = getMemMatrix(3, 4);
+    matrix m = getMemMatrix(3, 3);
     inputMatrix(m);
-    printf("%d", getMinInArea(m));
+    sortByDistance(m);
     outputMatrix(m);
     freeMemMatrix(m);
     return 0;
