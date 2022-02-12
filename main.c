@@ -271,13 +271,13 @@ int getNSpecialElement(matrix m) {
         int *subArray = getSubArray(m, i);
         int maxElement = getMaxValue(subArray, m.nRows);
         long long sum = 0;
-        for ( int j = 0; j < m.nRows; ++j){
-            if (subArray[j] ==maxElement){
+        for (int j = 0; j < m.nRows; ++j) {
+            if (subArray[j] == maxElement) {
                 continue;
             }
-            sum+=subArray[j];
+            sum += subArray[j];
         }
-        if (maxElement > sum){
+        if (maxElement > sum) {
             ++count;
         }
         free(subArray);
@@ -285,11 +285,45 @@ int getNSpecialElement(matrix m) {
     return count;
 }
 
+int getMinIndex(int *a, int size) {
+    int minIndex = 0;
+    for (int i = 0; i < size; ++i) {
+        if (a[i] < a[minIndex]) {
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+position getLeftMin(matrix m) {
+    int rowMin = 0;
+    int colMin = 0;
+    for (int i = 0; i < m.nCols; ++i) {
+        int *subArray = getSubArray(m, i);
+        int findRowIndex = getMinIndex(subArray, m.nRows);
+        if (m.values[findRowIndex][i] < m.values[rowMin][colMin]) {
+            rowMin = findRowIndex;
+            colMin = i;
+        }
+        free(subArray);
+    }
+    return (position) {rowMin, colMin};
+}
+
+void swapPenultimateRow(matrix m) {
+    position minValue = getLeftMin(m);
+    int *subArray = getSubArray(m, minValue.colIndex);
+    for (int i = 0; i < m.nRows; ++i) {
+        m.values[m.nRows - 2][i] = subArray[i];
+    }
+    free(subArray);
+}
+
 int main() {
-    matrix m = getMemMatrix(3, 4);
+    matrix m = getMemMatrix(3, 3);
     inputMatrix(m);
-    printf("%d", getNSpecialElement(m));
-    //outputMatrix(m);
+    swapPenultimateRow(m);
+    outputMatrix(m);
     freeMemMatrix(m);
     return 0;
 }
