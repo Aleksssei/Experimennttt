@@ -501,10 +501,46 @@ void printMatrixWithLowestNorm(matrixD *ms, int nMatrix) {
     }
 }
 
+bool isBiggerOnRight(int *a, int size) {
+    int cmp = a[0];
+    int min = a[1];
+    for (int i = 2; i < size; ++i) {
+        if (a[i] < min) {
+            min = a[i];
+        }
+    }
+    return cmp < min;
+}
+
+bool isLowestOnLeft(int *a, int size) {
+    int cmp = a[size - 1];
+    int max = a[size - 2];
+    for (int i = size - 3; i >= 0; --i) {
+        if (a[i] > max) {
+            max = a[i];
+        }
+    }
+    return cmp > max;
+}
+
+int getNSpecialElement2(matrix m) {
+    int count = 0;
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            bool isLowOnLeft = isLowestOnLeft(m.values[i] + j, j + 1);
+            bool isBigOnRight = isBiggerOnRight(m.values[i] + j, m.nCols - j + 1);
+            if (isLowOnLeft && isBigOnRight || isLowOnLeft && j == m.nCols - 1 || isBigOnRight && j == 0) {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 int main() {
-    matrixD *ms = getMemArrayOfMatricesD(3, 2, 2);
-    inputMatricesD(ms, 3);
-    printMatrixWithLowestNorm(ms, 3);
-    freeMemMatricesD(ms, 3);
+    matrix m = getMemMatrix(3, 5);
+    inputMatrix(m);
+    printf("%d", getNSpecialElement2(m));
+    freeMemMatrix(m);
     return 0;
 }
