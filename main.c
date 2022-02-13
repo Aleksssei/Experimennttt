@@ -386,14 +386,125 @@ void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
     }
 }
 
+typedef struct matrixD {
+    double **values;
+    int nRows;
+    int nCols;
+} matrixD;
+
+matrixD getMemMatrixD(int nRows, int nCols) {
+    double **values = (double **) malloc(sizeof(double *) * nRows);
+    for (int i = 0; i < nRows; ++i) {
+        values[i] = (double *) malloc(sizeof(double) * nCols);
+    }
+    return (matrixD) {values, nRows, nCols};
+}
+
+matrixD *getMemArrayOfMatricesD(int nMatrices, int nRows, int nCols) {
+    matrixD *arrayOfMatrices = (matrixD *) malloc(sizeof(matrixD) * nMatrices);
+    for (int i = 0; i < nMatrices; ++i) {
+        arrayOfMatrices[i] = getMemMatrixD(nRows, nCols);
+    }
+    return arrayOfMatrices;
+}
+
+void freeMemMatrixD(matrixD m) {
+    for (int i = 0; i < m.nRows; ++i) {
+        free(m.values[i]);
+    }
+    free(m.values);
+}
+
+void freeMemMatricesD(matrixD *ms, int nMatrices) {
+    for (int i = 0; i < nMatrices; ++i) {
+        freeMemMatrixD(ms[i]);
+    }
+}
+
+void inputMatrixD(matrixD m) {
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            scanf("%lf", *(m.values + i) + j);
+        }
+    }
+}
+
+void inputMatricesD(matrixD *ms, int nMatrices) {
+    for (int i = 0; i < nMatrices; ++i) {
+        inputMatrixD(*(ms + i));
+        printf("\n");
+    }
+}
+
+void outputMatrixD(matrixD m) {
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            printf("%lf ", m.values[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void outputMatricesD(matrixD *ms, int nMatrices) {
+    for (int i = 0; i < nMatrices; ++i) {
+        outputMatrixD(*(ms + i));
+    }
+}
+
+int getMaxIndex(double *a, int size) {
+    int maxIndex = 0;
+    for (int i = 1; i < size; ++i) {
+        if (fabs(a[i]) - fabs(a[maxIndex]) > DBL_EPSILON) {
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+position getMaxNorm(matrixD m) {
+    int rowMax = 0;
+    int colMax = 0;
+    for (int i = 0; i < m.nRows; ++i) {
+        int findColMax = getMaxIndex(m.values[i], m.nCols);
+        if (fabs(m.values[i][findColMax]) - fabs(m.values[rowMax][colMax]) > DBL_EPSILON) {
+            rowMax = i;
+            colMax = findColMax;
+        }
+    }
+    return (position) {rowMax, colMax};
+}
+
+void printMatrixWithLowestNorm(matrixD *ms, int nMatrix) {
+    double minNorm = fabs(ms[0].values[0][0]);
+    int firstNormIndex = 0;
+    int normMaxIndex = 0;
+    bool flag = true;
+    for (int i = 0; i < nMatrix; ++i) {
+        position maxNorm = getMaxNorm(ms[i]);
+        if (fabs(ms[i].values[maxNorm.rowIndex][maxNorm.colIndex]) - minNorm < DBL_EPSILON) {
+            minNorm = fabs(ms[i].values[maxNorm.rowIndex][maxNorm.colIndex]);
+            normMaxIndex = i;
+            if (flag) {
+                firstNormIndex = normMaxIndex;
+                flag = false;
+            }
+        }
+    }
+    for (int i = firstNormIndex; i < normMaxIndex + 1; ++i) {
+        position min = getMaxNorm(ms[i]);
+        if (fabs(ms[i].values[min.rowIndex][min.colIndex]) - minNorm < DBL_EPSILON) {
+            outputMatrixD(ms[i]);
+            if (i != normMaxIndex) {
+                printf("\n");
+            }
+        }
+    }
+}
+
 int main() {
-    //matrix m = getMemMatrix(2, 2);
-    matrix *ms = getMemArrayOfMatrices(5, 3, 2);
-    inputMatrices(ms, 5);
-    printMatrixWithMaxZeroRows(ms, 5);
-    //inputMatrix(m);
-    //outputMatrix(m);
-    //freeMemMatrix(m);;
-    freeMemMatrices(ms, 5);
+    matrixD *ms = getMemArrayOfMatricesD(3, 2, 2);
+    inputMatricesD(ms, 3);
+    printMatrixWithLowestNorm(ms, 3);
+    freeMemMatricesD(ms, 3);
     return 0;
 }
