@@ -502,6 +502,9 @@ void printMatrixWithLowestNorm(matrixD *ms, int nMatrix) {
 }
 
 bool isBiggerOnRight(int *a, int size) {
+    if (size == 1) {
+        return true;
+    }
     int cmp = a[0];
     int min = a[1];
     for (int i = 2; i < size; ++i) {
@@ -513,6 +516,9 @@ bool isBiggerOnRight(int *a, int size) {
 }
 
 bool isLowestOnLeft(int *a, int size) {
+    if (size == 1) {
+        return true;
+    }
     int cmp = a[size - 1];
     int max = a[size - 2];
     for (int i = size - 3; i >= 0; --i) {
@@ -528,8 +534,8 @@ int getNSpecialElement2(matrix m) {
     for (int i = 0; i < m.nRows; ++i) {
         for (int j = 0; j < m.nCols; ++j) {
             bool isLowOnLeft = isLowestOnLeft(m.values[i] + j, j + 1);
-            bool isBigOnRight = isBiggerOnRight(m.values[i] + j, m.nCols - j + 1);
-            if (isLowOnLeft && isBigOnRight || isLowOnLeft && j == m.nCols - 1 || isBigOnRight && j == 0) {
+            bool isBigOnRight = isBiggerOnRight(m.values[i] + j, m.nCols - j);
+            if (isLowOnLeft && isBigOnRight) {
                 ++count;
             }
         }
