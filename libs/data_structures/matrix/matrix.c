@@ -46,6 +46,7 @@ void inputMatrix(matrix m) {
 void inputMatrices(matrix *ms, int nMatrices) {
     for (int i = 0; i < nMatrices; ++i) {
         inputMatrix(*(ms + i));
+        printf("\n");
     }
 }
 

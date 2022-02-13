@@ -344,13 +344,56 @@ int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
     return count;
 }
 
+int countZeroValues(int *a, int size) {
+    int count = 0;
+    for (int i = 0; i < size; ++i) {
+        count += a[i] == 0;
+    }
+    return count;
+}
+
+int countZeroRows(matrix m) {
+    int count = 0;
+    for (int i = 0; i < m.nRows; ++i) {
+        count += countZeroValues(m.values[i], m.nCols) == m.nCols;
+    }
+    return count;
+}
+
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
+    int maxIndex = 0;
+    int maxCount = 0;
+    int firstMaxIndex = 0;
+    bool flag = true;
+    for (int i = 0; i < nMatrix; ++i) {
+        int currCount = countZeroRows(ms[i]);
+        if (currCount >= maxCount) {
+            maxCount = currCount;
+            maxIndex = i;
+            if (flag) {
+                firstMaxIndex = maxIndex;
+                flag = false;
+            }
+        }
+    }
+    for (int i = firstMaxIndex; i < maxIndex + 1; ++i) {
+        if (countZeroRows(ms[i]) == maxCount) {
+            outputMatrix(ms[i]);
+            if (i != maxIndex) {
+                printf("\n");
+            }
+        }
+    }
+}
+
 int main() {
-    //matrix m = getMemMatrix(3, 3);
-    matrix *ms = getMemArrayOfMatrices(4, 2, 2);
-    inputMatrices(ms, 4);
-    printf("%d", countNonDescendingRowsMatrices(ms, 4));
+    //matrix m = getMemMatrix(2, 2);
+    matrix *ms = getMemArrayOfMatrices(5, 3, 2);
+    inputMatrices(ms, 5);
+    printMatrixWithMaxZeroRows(ms, 5);
     //inputMatrix(m);
     //outputMatrix(m);
-    //freeMemMatrix(m);
+    //freeMemMatrix(m);;
+    freeMemMatrices(ms, 5);
     return 0;
 }
