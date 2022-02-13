@@ -217,7 +217,7 @@ int getMinInArea(matrix m) {
 double getDistance(int *a, int size) {
     long long sum = 0;
     for (int i = 0; i < size; ++i) {
-        sum += a[i];
+        sum += pow(a[i], 2);
     }
     return sqrt(sum);
 }
@@ -543,10 +543,99 @@ int getNSpecialElement2(matrix m) {
     return count;
 }
 
+double getVectorLength(int *a, int size) {
+    long long sum = 0;
+    for (int i = 0; i < size; ++i) {
+        sum += pow(a[i], 2);
+    }
+    return sqrt(sum);
+}
+
+double getScalarProduct(int *a, int *b, int size) {
+    long long sum = 0;
+    for (int i = 0; i < size; ++i) {
+        sum += a[i] * b[i];
+    }
+    return sum;
+}
+
+double getCosine(int *a, int *b, int size) {
+    return getScalarProduct(a, b, size) / (getVectorLength(a, size) * getVectorLength(b, size));
+}
+
+int getVectorIndexWithMaxAngle(matrix m, int *b) {
+    int minIndex = 0;
+    double min = getCosine(m.values[0], b, m.nCols);
+    for (int i = 1; i < m.nRows; ++i) {
+        double cos = getCosine(m.values[i], b, m.nCols);
+        if (cos - min < DBL_EPSILON) {
+            minIndex = i;
+            min = cos;
+        }
+    }
+    return minIndex;
+}
+
+int getMaxIndexD(double *a, int size) {
+    int maxIndex = 0;
+    for (int i = 1; i < size; ++i) {
+        if (a[i] - a[maxIndex] > DBL_EPSILON) {
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+position getMaxElement(matrixD m) {
+    int rowMax = 0;
+    int colMax = 0;
+    for (int i = 0; i < m.nRows; ++i) {
+        int getColIndex = getMaxIndexD(m.values[i], m.nCols);
+        if (m.values[i][getColIndex] - m.values[rowMax][colMax] > DBL_EPSILON) {
+            rowMax = i;
+            colMax = getColIndex;
+        }
+    }
+    return (position) {rowMax, colMax};
+}
+
+int getMinIndexD(double *a, int size) {
+    int minIndex = 0;
+    for (int i = 0; i < size; ++i) {
+        if (a[i] - a[minIndex] < DBL_EPSILON) {
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+position getMinElement(matrixD m) {
+    int rowMin = 0;
+    int colMin = 0;
+    for (int i = 0; i < m.nRows; ++i) {
+        int findColIndex = getMinIndexD(m.values[i], m.nCols);
+        if (m.values[i][findColIndex] - m.values[rowMin][colMin] < DBL_EPSILON) {
+            rowMin = i;
+            colMin = findColIndex;
+        }
+    }
+    return (position) {rowMin, colMin};
+}
+
+double getSpecialScalarProduct(matrixD m) {
+    double sum = 0;
+    position maxElement = getMaxElement(m);
+    position minElement = getMinElement(m);
+    for (int i = 0; i < m.nRows; ++i) {
+        sum += m.values[maxElement.rowIndex][i] * m.values[i][minElement.colIndex];
+    }
+    return sum;
+}
+
 int main() {
-    matrix m = getMemMatrix(3, 5);
-    inputMatrix(m);
-    printf("%d", getNSpecialElement2(m));
-    freeMemMatrix(m);
+    matrixD m = getMemMatrixD(3, 3);
+    inputMatrixD(m);
+    printf("%lf", getSpecialScalarProduct(m));
+    freeMemMatrixD(m);
     return 0;
 }
