@@ -102,7 +102,7 @@ int maxValue(int a, int b) {
     return a > b ? a : b;
 }
 
-void solveFirst(matrix m) {
+void swapMinNMaxRows(matrix m) {
     position minElement = getMinValuePos(m);
     position maxElement = getMaxValuePos(m);
     swapRows(m, minElement.rowIndex, maxElement.rowIndex);
@@ -209,7 +209,7 @@ int getMinInArea(matrix m) {
         } else {
             --firstColIndex;
         }
-        minValue = min(minValue, getMinValue(m.values[i] + firstColIndex, secondColIndex + 1));
+        minValue = min(minValue, getMinValue(m.values[i] + firstColIndex, secondColIndex - firstColIndex + 1));
     }
     return minValue;
 }
@@ -632,10 +632,551 @@ double getSpecialScalarProduct(matrixD m) {
     return sum;
 }
 
-int main() {
-    matrixD m = getMemMatrixD(3, 3);
+void test_swapMinNMaxRows_firstMinLastMax() {
+    printf("Test_swapMinNMaxRows_firstMinLastMax, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int *ptrMin = m.values[0];
+    int *ptrMax = m.values[m.nRows - 1];
+    swapMinNMaxRows(m);
+    assert(m.values[0] == ptrMax);
+    assert(m.values[m.nRows - 1] == ptrMin);
+    freeMemMatrix(m);
+}
+
+void test_sortRowsByMaxElement_MedSmallLarge() {
+    printf("Test_sortRowsByMaxElement_MedSmallLarge, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int *ptrMed = m.values[0];
+    int *ptrSmall = m.values[1];
+    int *ptrLarge = m.values[2];
+    insertionSortRowsMatrixByRowCriteria(m, getMaxValue);
+    assert(m.values[0] == ptrSmall);
+    assert(m.values[1] == ptrMed);
+    assert(m.values[2] == ptrLarge);
+    freeMemMatrix(m);
+}
+
+void test_sortColsByMinElement_MedSmallLarge() {
+    printf("Test_sortColsByMinElement_MedSmallLarge, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int colSmallIndex = 1;
+    int colLargeIndex = 2;
+    int colMedIndex = 0;
+    insertionSortColsMatrixByColCriteria(m, getMinValue);
+    int newColSmallIndex = 0;
+    int newColMedIndex = 1;
+    int newColLargeIndex = 2;
+    assert(newColSmallIndex == colSmallIndex - 1);
+    assert(newColMedIndex == colMedIndex + 1);
+    assert(newColLargeIndex == colLargeIndex);
+    freeMemMatrix(m);
+}
+
+void test_getSquareOfMatrixIfSymmetrical_isSymmetrical() {
+    printf("Test_getSquareOfMatrixIfSymmetrical_isSymmetrical, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    getSquareOfMatrixIfSymmetrical(&m);
+    int expectedResult[][2] = {{5, 8},
+                               {8, 13}};
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            assert(expectedResult[i][j] == m.values[i][j]);
+        }
+    }
+    freeMemMatrix(m);
+}
+
+void test_transposeIfMatrixHasNoEqualSumOfRows_notEqual() {
+    printf("Test_transposeIfMatrixHasNoEqualSumOfRows_notEqual, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int expectedResult[][2] = {{1, 3},
+                               {2, 4}};
+    transposeIfMatrixHasNotEqualSumOfRows(&m);
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            assert(m.values[i][j] == expectedResult[i][j]);
+        }
+    }
+    freeMemMatrix(m);
+}
+
+void test_transposeIfMatrixHasNoEqualSumOfRows_hasEqual() {
+    printf("Test_transposeIfMatrixHasNoEqualSumOfRows_hasEqual, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int expectedResult[][2] = {{1, 3},
+                               {2, 2}};
+    transposeIfMatrixHasNotEqualSumOfRows(&m);
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            assert(m.values[i][j] == expectedResult[i][j]);
+        }
+    }
+    freeMemMatrix(m);
+}
+
+void test_isMutuallyInverseMatrices_inverse() {
+    printf("Test_isMutuallyInverseMatrices_inverse, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select first matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    printf("Select second matrix dimensions:\n");
+    int nRows1;
+    printf("Number of rows:");
+    scanf("%d", &nRows1);
+    int nCols1;
+    printf("Number of cols:");
+    scanf("%d", &nCols1);
+    matrix m1 = getMemMatrix(nRows1, nCols1);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m1);
+    bool result = isMutuallyInverseMatrix(m, m1);
+    assert(result == 1);
+    freeMemMatrix(m);
+    freeMemMatrix(m1);
+}
+
+void test_isMutuallyInverseMatrices_notInverse() {
+    printf("Test_isMutuallyInverseMatrices_notInverse, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select first matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    printf("Select second matrix dimensions:\n");
+    int nRows1;
+    printf("Number of rows:");
+    scanf("%d", &nRows1);
+    int nCols1;
+    printf("Number of cols:");
+    scanf("%d", &nCols1);
+    matrix m1 = getMemMatrix(nRows1, nCols1);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m1);
+    bool result = isMutuallyInverseMatrix(m, m1);
+    assert(result == 0);
+    freeMemMatrix(m);
+    freeMemMatrix(m1);
+}
+
+void test_findSumOfMaxesOfPseudoDiagonal_twoOnTwoMatrix() {
+    printf("Test_findSumOfMaxesOfPseudoDiagonal_twoOnTwoMatrix, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    long long result = findSumOfMaxesOfPseudoDiagonal(m);
+    long long expectedResult = 5;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_findSumOfMaxesOfPseudoDiagonal_oneOnOneMatrix() {
+    printf("Test_findSumOfMaxesOfPseudoDiagonal_oneOnOneMatrix, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    long long result = findSumOfMaxesOfPseudoDiagonal(m);
+    long long expectedResult = 0;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_getMinInArea_maxMiddle() {
+    printf("Test_getMinInArea_maxMiddle, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = getMinInArea(m);
+    int expectedResult = 1;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_getMinInArea_maxRight() {
+    printf("Test_getMinInArea_maxRight, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = getMinInArea(m);
+    int expectedResult = 1;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_getMinInArea_maxLeft() {
+    printf("Test_getMinInArea_maxLeft, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = getMinInArea(m);
+    int expectedResult = 1;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_sortByDistance_matrixThreeByThree() {
+    printf("Test_sortByDistance_matrixThreeByThree, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int *ptrSmall = m.values[1];
+    int *ptrMed = m.values[0];
+    int *ptrLarge = m.values[2];
+    sortByDistance(m);
+    assert(m.values[0] == ptrSmall);
+    assert(m.values[1] == ptrMed);
+    assert(m.values[2] == ptrLarge);
+    freeMemMatrix(m);
+}
+
+void test_countEqClassesByRowsSum_allRowsAreEqual() {
+    printf("Test_countEqClassesByRowsSum_allRowsAreEqual, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = countEqClassesByRowsSum(m);
+    int expectedResult = 1;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_countEqClassesByRowsSum_twoClasses() {
+    printf("Test_countEqClassesByRowsSum_twoClasses, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = countEqClassesByRowsSum(m);
+    int expectedResult = 2;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+
+void test_getNSpecialElement() {
+    printf("Test_getNSpecialElement, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = getNSpecialElement(m);
+    int expectedResult = 2;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_swapPenultimateRow_matrixThreeByThree() {
+    printf("Test_swapPenultimateRow_matrixThreeByThree, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int minElementInCol = m.values[2][0];
+    swapPenultimateRow(m);
+    int minElementAfterSwap = m.values[1][2];
+    assert(minElementAfterSwap == minElementInCol);
+    freeMemMatrix(m);
+}
+
+void test_countNonDescendingRowsMatrices() {
+    printf("Test_countNonDescendingRowsMatrices, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select array of matrices dimensions:\n");
+    int nMatrices;
+    printf("Number of element in array:");
+    scanf("%d", &nMatrices);
+    int nRows;
+    printf("Number of rows in each matrix:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols in each matrix:");
+    scanf("%d", &nCols);
+    matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols);
+    for (int i = 0; i < 3; ++i) {
+        printf("Enter a matrix element:\n");
+        inputMatrix(ms[i]);
+    }
+    int result = countNonDescendingRowsMatrices(ms, nMatrices);
+    int expectedResult = 2;
+    assert(result == expectedResult);
+    freeMemMatrices(ms, nMatrices);
+}
+
+void test_countZeroRows() {
+    printf("Test_countZeroRows, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = countZeroRows(m);
+    int expectedResult = 1;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_getMaxNorm_matrixThreeByThree() {
+    printf("Test_getMaxNorm, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrixD m = getMemMatrixD(nRows, nCols);
+    printf("Enter a matrix element:\n");
     inputMatrixD(m);
-    printf("%lf", getSpecialScalarProduct(m));
+    position maxNorm = getMaxNorm(m);
+    position expectedMaxNorm = {2, 2};
+    assert(m.values[maxNorm.rowIndex][maxNorm.colIndex] ==
+           m.values[expectedMaxNorm.rowIndex][expectedMaxNorm.colIndex]);
     freeMemMatrixD(m);
+}
+
+void test_getNSpecialElement2() {
+    printf("Test_getNSpecialElement2, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int result = getNSpecialElement2(m);
+    int expectedResult = 4;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_getVectorIndexWithMaxAngles() {
+    printf("Test_getVectorIndexWithMaxAngles, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrix m = getMemMatrix(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrix(m);
+    int b[] = {3, 4, 5};
+    int result = getVectorIndexWithMaxAngle(m, b);
+    int expectedResult = 0;
+    assert(result == expectedResult);
+    freeMemMatrix(m);
+}
+
+void test_getSpecialScalarProduct_matrixTwoByTwo() {
+    printf("Test_getSpecialScalarProduct_matrixTwoByTwo, press enter to start:");
+    while (getchar() != '\n');
+    printf("Select matrix dimensions:\n");
+    int nRows;
+    printf("Number of rows:");
+    scanf("%d", &nRows);
+    int nCols;
+    printf("Number of cols:");
+    scanf("%d", &nCols);
+    matrixD m = getMemMatrixD(nRows, nCols);
+    printf("Enter a matrix element:\n");
+    inputMatrixD(m);
+    double result = getSpecialScalarProduct(m);
+    double expectedResult = 21;
+    assert(fabs(result - expectedResult) < DBL_EPSILON);
+    freeMemMatrixD(m);
+}
+
+void test() {
+    test_swapMinNMaxRows_firstMinLastMax();
+    test_sortRowsByMaxElement_MedSmallLarge();
+    test_sortColsByMinElement_MedSmallLarge();
+    test_getSquareOfMatrixIfSymmetrical_isSymmetrical();
+    test_transposeIfMatrixHasNoEqualSumOfRows_notEqual();
+    test_transposeIfMatrixHasNoEqualSumOfRows_hasEqual();
+    test_isMutuallyInverseMatrices_inverse();
+    test_isMutuallyInverseMatrices_notInverse();
+    test_findSumOfMaxesOfPseudoDiagonal_twoOnTwoMatrix();
+    test_findSumOfMaxesOfPseudoDiagonal_oneOnOneMatrix();
+    test_getMinInArea_maxMiddle();
+    test_getMinInArea_maxLeft();
+    test_getMinInArea_maxRight();
+    test_sortByDistance_matrixThreeByThree();
+    test_countEqClassesByRowsSum_allRowsAreEqual();
+    test_countEqClassesByRowsSum_twoClasses();
+    test_getNSpecialElement();
+    test_swapPenultimateRow_matrixThreeByThree();
+    test_countNonDescendingRowsMatrices();
+    test_countZeroRows();
+    test_getMaxNorm_matrixThreeByThree();
+    test_getNSpecialElement2();
+    test_getVectorIndexWithMaxAngles();
+    test_getSpecialScalarProduct_matrixTwoByTwo();
+}
+
+int main() {
+
     return 0;
 }
