@@ -34,12 +34,6 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 8,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
 				"line" : 9,
 				"parent" : 0
 			}
@@ -102,7 +96,6 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
 				"fragment" : "libs\\algorithms\\libalgorithms.a",
 				"role" : "libraries"
 			},

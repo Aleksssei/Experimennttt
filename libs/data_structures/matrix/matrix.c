@@ -1,10 +1,8 @@
-#include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "matrix.h"
 #include <mem.h>
-#include<windows.h>
 
 matrix getMemMatrix(int nRows, int nCols) {
     int **values = (int **) malloc(sizeof(int *) * nRows);
@@ -173,18 +171,6 @@ bool isSymmetricalMatrix(matrix m) {
     return false;
 }
 
-/*void transposeSquareMatrix(matrix m){
-    matrix m1= getMemMatrix(m.nCols,m.nRows);
-    for ( int i = 0; i < m.nCols;++i){
-        int *subArray = getSubArray(m,i);
-        m1.values[i] = subArray;
-    }
-    for ( int i = 0; i < m.nCols; ++i){
-        m.values[i] =m1.values[i];
-    }
-}
- */
-
 void transposeMatrix(matrix *m) {
     matrix m1 = getMemMatrix(m->nCols, m->nRows);
     for (int i = 0; i < m->nCols; ++i) {
@@ -295,20 +281,3 @@ matrix multiplyOfTwoMatrix(matrix m, matrix m1) {
     fprintf(stderr, "Matrices do not multiply");
     exit(1);
 }
-
-/*matrix multiplyOfTwoMatrix(matrix m, matrix m1) {
-    if (m.nCols == m1.nRows) {
-        matrix result = getMemMatrix(m.nRows, m1.nCols);
-        for (int i = 0; i < result.nRows; ++i) {
-            for (int j = 0; j < result.nCols; ++j) {
-                int *subArray = getSubArray(m1, j);
-                result.values[i][j] = getSumOfTwoArrays(m.values[i], subArray, m.nCols);
-                free(subArray);
-            }
-        }
-        return result;
-    }
-    fprintf(stderr, "Matrices do not multiply");
-    exit(1);
-}
-*/

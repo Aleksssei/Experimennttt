@@ -138,11 +138,11 @@ build libs/rebuild_cache: phony libs/CMakeFiles/rebuild_cache.util
 
 build cmake_object_order_depends_target_data_structures: phony || cmake_object_order_depends_target_algorithms
 
-build libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj: C_COMPILER__data_structures_Debug D$:/new$ c$ projects/libs/data_structures/matrix/matrix.c || cmake_object_order_depends_target_data_structures
-  DEP_FILE = libs\data_structures\CMakeFiles\data_structures.dir\matrix\matrix.c.obj.d
+build libs/data_structures/CMakeFiles/data_structures.dir/string/string_.c.obj: C_COMPILER__data_structures_Debug D$:/new$ c$ projects/libs/data_structures/string/string_.c || cmake_object_order_depends_target_data_structures
+  DEP_FILE = libs\data_structures\CMakeFiles\data_structures.dir\string\string_.c.obj.d
   FLAGS = -g -std=gnu11
   OBJECT_DIR = libs\data_structures\CMakeFiles\data_structures.dir
-  OBJECT_FILE_DIR = libs\data_structures\CMakeFiles\data_structures.dir\matrix
+  OBJECT_FILE_DIR = libs\data_structures\CMakeFiles\data_structures.dir\string
 
 
 # =============================================================================
@@ -152,7 +152,7 @@ build libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj: C
 #############################################
 # Link the static library libs\data_structures\libdata_structures.a
 
-build libs/data_structures/libdata_structures.a: C_STATIC_LIBRARY_LINKER__data_structures_Debug libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj || libs/algorithms/libalgorithms.a
+build libs/data_structures/libdata_structures.a: C_STATIC_LIBRARY_LINKER__data_structures_Debug libs/data_structures/CMakeFiles/data_structures.dir/string/string_.c.obj || libs/algorithms/libalgorithms.a
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = libs\data_structures\CMakeFiles\data_structures.dir
   POST_BUILD = cd .

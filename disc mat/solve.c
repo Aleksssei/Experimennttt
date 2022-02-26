@@ -1,4 +1,7 @@
-/*
+#include <stdio.h>
+#include <stdbool.h>
+#include <windows.h>
+
 void inputArray(int *a, int size) {
     for (int i = 0; i < size; ++i) {
         scanf("%d", a + i);
@@ -442,4 +445,3 @@ void solveTwelfthQuest(){
     bool ans = count == arraySize;
     printf("%d", ans);
 }
-*/
