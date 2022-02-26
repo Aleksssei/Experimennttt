@@ -8,3 +8,4 @@ add_executable(new_c_projects main.c)
 add_subdirectory(libs)
 target_link_libraries(new_c_projects data_structures)
 
+

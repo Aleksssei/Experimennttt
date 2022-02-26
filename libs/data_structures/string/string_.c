@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <memory.h>
+#include "string_.h"
 
 size_t myStrLen(char *s) {
     char *end = s;

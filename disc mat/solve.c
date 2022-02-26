@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <windows.h>
+#include "libs/data_structures/string/string_.h"
 
 void inputArray(int *a, int size) {
     for (int i = 0; i < size; ++i) {
