@@ -11,12 +11,11 @@
 void assertString(const char *expected, const char *got, const char *fileName, const char *funcName, int line) {
     if (myStrCmp(expected, got)) {
         fprintf(stderr, "File %s\n", fileName);
-        fprintf(stderr, "%s failed on line %d\n", funcName,line);
-        fprintf(stderr,"Expected: %s\n", expected);
-        fprintf(stderr,"Got: %s\n", got);
-    }
-    else{
-        fprintf(stderr,"%s - OK\n", funcName);
+        fprintf(stderr, "%s failed on line %d\n", funcName, line);
+        fprintf(stderr, "Expected: %s\n", expected);
+        fprintf(stderr, "Got: %s\n", got);
+    } else {
+        fprintf(stderr, "%s - OK\n", funcName);
     }
 }
 
@@ -34,6 +33,7 @@ void finishWork(void){
 }
 */
 
+// FIRST
 char *getEndOfString(char *s) {
     char *copyS = s;
     while (*copyS != '\0') {
@@ -48,9 +48,36 @@ void removeNonLetters(char *s) {
     *destination = '\0';
 }
 
+//SECOND
+
+bool isNextNotEqual(char *s) {
+    char *copyS = s;
+    return *s != *++copyS;
+}
+
+char *copyIfS(char *beginSource, const char *endSource, char *beginDestination, bool (*f)(char *)) {
+    while (beginSource != endSource) {
+        if (f(beginSource)) {
+            *beginDestination++ = *beginSource;
+        }
+        ++beginSource;
+    }
+    return beginDestination;
+}
+
+void removeAdjacentEqualLetters(char *s) {
+    char *endSource = getEndOfString(s);
+    char *destination = copyIfS(s, endSource, s, isNextNotEqual);
+    *destination = '\0';
+}
+
+//third
+
+
+
 int main() {
-    char s[] = " s t r";
-    removeNonLetters(s);
-    ASSERT_STRING("str", s);
+    char s[] = "     sssssss     ";
+    removeAdjacentEqualLetters(s);
+    printf("%s", s);
     return 0;
 }
