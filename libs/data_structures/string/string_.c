@@ -54,11 +54,11 @@ int myStrCmp(char *fStr, char *sStr) {
 
 char *copy(char *beginSource, const char *endSource, char *beginDestination) {
     //while (beginSource != endSource) {
-    // *beginDestination++ = *beginSource++;
+       // *beginDestination++ = *beginSource++;
     //}
     size_t size = endSource - beginSource;
     memcpy(beginDestination, beginSource, size);
-    return beginDestination + size;
+    return beginDestination+size;
 }
 
 char *copyIf(char *beginSource, const char *endSource, char *beginDestination, bool (*f)(int)) {
@@ -72,9 +72,9 @@ char *copyIf(char *beginSource, const char *endSource, char *beginDestination, b
 }
 
 char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDestination, bool(*f)(int)) {
-    while (rbeginSource!=rendSource){
-        if(f(*rbeginSource)){
-            *beginDestination++=*rbeginSource;
+    while (rbeginSource != rendSource) {
+        if (f(*rbeginSource)) {
+            *beginDestination++ = *rbeginSource;
         }
         --rbeginSource;
     }

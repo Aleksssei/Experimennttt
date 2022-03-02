@@ -7,6 +7,7 @@
 
 #define ASSERT_STRING(expected, got) assertString(expected,got, __FILE__,__FUNCTION__,__LINE__)
 
+#define MAX_STRING_SIZE 1000
 
 void assertString(const char *expected, const char *got, const char *fileName, const char *funcName, int line) {
     if (myStrCmp(expected, got)) {
@@ -73,11 +74,58 @@ void removeAdjacentEqualLetters(char *s) {
 
 //third
 
+char _stringBuffer[MAX_STRING_SIZE];
+
+typedef struct wordDescriptor {
+    char *begin;
+    char *end;
+} wordDescriptor;
+
+/*
+bool getWord(char *begin, wordDescriptor *word) {
+    word->begin = findNonSpace(begin);
+    if (*word->begin == '\0') {
+        return false;
+    }
+    word->end = findSpace(word->begin);
+    return true;
+}
+
+void getNewWord(char *s, wordDescriptor word) {
+    char *begin = s;
+    while (getWord(begin, &word)) {
+        char *endWord = copy(word.begin, word.end, _stringBuffer);
+        char *afterDigits = copyIfReverse(endWord - 1, _stringBuffer - 1, word.begin, isdigit);
+        copyIf(_stringBuffer, endWord, afterDigits, isalpha);
+        begin = word.end;
+    }
+}
+*/
+
+bool getWord(char *s, wordDescriptor *word) {
+    word->begin = findNonSpace(s);
+    if (*word->begin == '\0') {
+        return false;
+    }
+    word->end = findSpace(s);
+    return true;
+}
+
+void getNewWord(char *s, wordDescriptor word) {
+    char *begin = s;
+    while (getWord(begin, &word)) {
+        char *endWord = copy(word.begin, word.end, _stringBuffer);
+        char *afterDigits = copyIf(_stringBuffer, endWord, word.begin, isdigit);
+        copyIf(_stringBuffer, endWord, afterDigits, isalpha);
+        begin = word.end;
+    }
+}
 
 
 int main() {
-    char s[] = "     sssssss     ";
-    removeAdjacentEqualLetters(s);
+    char s[] = "12dtyu34t";
+    wordDescriptor newWord;
+    getNewWord(s, newWord);
     printf("%s", s);
     return 0;
 }
