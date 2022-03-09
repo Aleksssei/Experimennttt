@@ -1,19 +1,13 @@
 # ninja log v5
-3	129	6680124220444869	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+2	105	6681887019473081	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
 299	479	6661135763610508	libs/algorithms/libalgorithms.a	31bc42ed0b83598f
-129	235	6680124221529089	new_c_projects.exe	5d03e0858c5d2acc
+105	226	6681887020648434	new_c_projects.exe	5d03e0858c5d2acc
 0	256	6676480322003830	build.ninja	9bddd08960b5e38a
-118	332	6679296208431329	libs/data_structures/libdata_structures.a	c1c97f251812c6c2
+115	178	6680794643892551	libs/data_structures/libdata_structures.a	c1c97f251812c6c2
 2	108	6660416915110142	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	1b9946eab908e21c
 16	124	6660440152924896	libs/data_structures/CMakeFiles/data_structures.dir/vectorVoid/vectorVoid.c.obj	94e10450fc2eec17
 6	298	6661135761805636	libs/algorithms/CMakeFiles/algorithms.dir/algorithm/array.c.obj	ccb1aefd47a261b0
 27	236	6675634607880341	libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj	33104f39615dd40d
-18	118	6679296206252336	libs/data_structures/CMakeFiles/data_structures.dir/string/string_.c.obj	823156ea23cf1ed2
-2	201	6680124342347670	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
-201	368	6680124344467367	new_c_projects.exe	5d03e0858c5d2acc
-1	221	6680124530429124	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
-221	340	6680124531597944	new_c_projects.exe	5d03e0858c5d2acc
-2	96	6680124598727867	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
-96	190	6680124599639554	new_c_projects.exe	5d03e0858c5d2acc
-2	132	6680124640107695	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
-132	232	6680124641085538	new_c_projects.exe	5d03e0858c5d2acc
+18	115	6680794643232927	libs/data_structures/CMakeFiles/data_structures.dir/string/string_.c.obj	823156ea23cf1ed2
+3	141	6681887059905120	CMakeFiles/new_c_projects.dir/main.c.obj	5c55c27f7ecedf3e
+141	265	6681887061070126	new_c_projects.exe	5d03e0858c5d2acc
