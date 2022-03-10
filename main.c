@@ -136,11 +136,19 @@ void selectionSort(int *a, int size) {
     }
 }
 
-
+void insertionSort(int *a, int size) {
+    for (int i = 1; i < size; ++i) {
+        for (int j = i; j > 0; --j) {
+            if (a[j] < a[j - 1]) {
+                swap(a + j, a + j - 1, sizeof a[j]);
+            }
+        }
+    }
+}
 
 int main() {
     int array[] = {4, 4, 4, 3, 2, 1, 4, 5, 6};
-    selectionSort(array, ARRAY_SIZE(array));
+    insertionSort(array, ARRAY_SIZE(array));
     outputArray(array, ARRAY_SIZE(array));
     return 0;
 }
