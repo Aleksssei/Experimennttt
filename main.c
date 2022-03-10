@@ -114,8 +114,21 @@ void timeExperiment() {
     }
 }
 
-void bubble
+void bubbleSort(int *a, int size) {
+    for (int i =0; i < size; ++i){
+        for (int j = 1; j < size; ++j){
+            if (a[j] < a[j-1]){
+                swap(a+j,a+j-1,sizeof a[j]);
+            }
+        }
+    }
+}
+
+
 
 int main() {
+    int array[] = { 4 ,4 ,4 ,3, 2,1,4,5,6};
+    bubbleSort(array, ARRAY_SIZE(array));
+    outputArray(array,ARRAY_SIZE(array));
     return 0;
 }
