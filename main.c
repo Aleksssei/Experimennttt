@@ -114,6 +114,7 @@ void timeExperiment() {
     }
 }
 
+/*
 void bubbleSort(int *a, int size) {
     for (int i = 0; i < size; ++i) {
         for (int j = 1; j < size; ++j) {
@@ -145,10 +146,68 @@ void insertionSort(int *a, int size) {
         }
     }
 }
+*/
+
+void bubbleSort(int *a, int size) {
+    int k = 0;
+    for (int i = 0; i < size; ++i) {
+        bool flag = false;
+        for (int j = 1; j < size - k; ++j) {
+            if (a[j] < a[j - 1]) {
+                swap(a + j, a + j - 1, sizeof a[j]);
+                flag = true;
+            }
+        }
+        if (!flag) {
+            break;
+        }
+        ++k;
+    }
+}
+
+void selectionSort(int *a, int size) {
+    for (int i = 0; i < size - 1; ++i) {
+        int minPos = i;
+        for (int j = i + 1; j < size; ++j) {
+            if (a[j] < a[minPos]) {
+                minPos = j;
+            }
+        }
+        swap(a + i, a + minPos, sizeof a[minPos]);
+    }
+}
+
+void insertionSort(int *a, int size) {
+    for (int i = 1; i < size; ++i) {
+        int j = i;
+        while (j > 0 && a[j - 1] > a[j]) {
+            swap(a + j, a + j - 1, sizeof a[j]);
+            --j;
+        }
+    }
+}
+
+void combSort(int *a, int size) {
+    int step = size;
+    double factor = 1.24733;
+    bool swapped = false;
+    while (step > 1 || swapped) {
+        swapped = false;
+        if (step > 1) {
+            step /= factor;
+        }
+        for (int i = 0, j = i + step; j < size; ++j, ++i) {
+            if (a[i] > a[j]) {
+                swap(a + i, a + j, sizeof a[i]);
+                swapped = true;
+            }
+        }
+    }
+}
 
 int main() {
     int array[] = {4, 4, 4, 3, 2, 1, 4, 5, 6};
-    insertionSort(array, ARRAY_SIZE(array));
+    combSort(array, ARRAY_SIZE(array));
     outputArray(array, ARRAY_SIZE(array));
     return 0;
 }
