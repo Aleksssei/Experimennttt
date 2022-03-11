@@ -190,7 +190,7 @@ void insertionSort(int *a, int size) {
 void combSort(int *a, int size) {
     int step = size;
     double factor = 1.24733;
-    bool swapped = false;
+    bool swapped;
     while (step > 1 || swapped) {
         swapped = false;
         if (step > 1) {
@@ -205,9 +205,21 @@ void combSort(int *a, int size) {
     }
 }
 
+void shellSort(int *a, int size) {
+    for (int gap = size / 2; gap > 0; gap /= 2) {
+        for (int i = gap; i < size; ++i) {
+            int j = i;
+            while (j >= gap && a[j] < a[j - gap]) {
+                swap(a + j, a + j - gap, sizeof a[j]);
+                j -= gap;
+            }
+        }
+    }
+}
+
 int main() {
-    int array[] = {4, 4, 4, 3, 2, 1, 4, 5, 6};
-    combSort(array, ARRAY_SIZE(array));
+    int array[] = {1, 6, 7, 1, 2, 3, 4};
+    shellSort(array, ARRAY_SIZE(array));
     outputArray(array, ARRAY_SIZE(array));
     return 0;
 }
