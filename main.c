@@ -63,90 +63,40 @@ void outputArray(int *a, int size) {
     }
 }
 
-void
-checkTime(void (*sortFunc)(int *, size_t), void (*generateFunc)(int *, size_t), size_t size, char *experimentName) {
-    static size_t runCounter = 1;
-    static int innerBuffer[100000];
-    generateFunc(innerBuffer, size);
-    printf("Run  #%zu | ", runCounter++);
-    printf("Name : %s\n", experimentName);
-    double time;
-    TIME_TEST({ sortFunc(innerBuffer, size); }, time)
-    printf("Status:  ");
-    if (isOrdered(innerBuffer, size)) {
-        printf("OK! Time: %.3f s.\n", time);
-        char *filename[256];
-        sprintf(filename, "./data/%s.csv", experimentName);
-        FILE *f = fopen(filename, "a");
-        if (f == NULL) {
-            printf("An error occurred when opening the file %s", filename);
-            exit(1);
-        }
-        fprintf(f, "%zu; %.3f\n", size, time);
-        fclose(f);
-    } else {
-        printf("Wrong!\n");
-        outputArray(innerBuffer, size);
-        exit(1);
-    }
-
+void quickSort(int *a, int size) {
+    // TODO
 }
 
-void timeExperiment() {
-    sortFunc sorts[] = {{},
-                        {}};
-    const unsigned numberOfFunc = ARRAY_SIZE(sorts);
-    generatingFunc generatingFuncs[] = {{},
-                                        {},
-                                        {}};
-    const unsigned numberOfGeneratingFuncs = ARRAY_SIZE(generatingFuncs);
-    for (size_t size = 10000; size <= 100000; size += 10000) {
-        printf("--------------------------------- \n");
-        printf("Size: %lld\n", size);
-        for (int i = 0; i < numberOfFunc; ++i) {
-            for (int j = 0; j < numberOfGeneratingFuncs; ++j) {
-                static char filename[128];
-                sprintf(filename, "%s_%s_time", sorts[i].name, generatingFuncs[j].name);
-                checkTime(sorts[i].sort, generatingFuncs[j].generate, size, filename);
-            }
-        }
-        printf("\n");
-    }
+int compare(const void *a, const void *b) {
+    return *(int *) a - *(int *) b;
 }
 
-/*
-void bubbleSort(int *a, int size) {
+void generateRandomArray(int *a, size_t size) {
+    srand(time(0));
     for (int i = 0; i < size; ++i) {
-        for (int j = 1; j < size; ++j) {
-            if (a[j] < a[j - 1]) {
-                swap(a + j, a + j - 1, sizeof a[j]);
-            }
-        }
+        a[i] = rand() % 1000;
     }
 }
 
-void selectionSort(int *a, int size) {
-    for (int i = 0; i < size - 1; ++i) {
-        int minPos = i;
-        for (int j = i + 1; j < size; ++j) {
-            if (a[j] < a[minPos]) {
-                minPos = j;
-            }
-        }
-        swap(a + i, a + minPos, sizeof a[minPos]);
+void generateOrderedArray(int *a, size_t size) {
+    srand(time(0));
+    for (int i = 0; i < size; ++i) {
+        a[i] = rand() % 1000;
     }
+    qsort(a, size, sizeof a[0], compare);
 }
 
-void insertionSort(int *a, int size) {
-    for (int i = 1; i < size; ++i) {
-        for (int j = i; j > 0; --j) {
-            if (a[j] < a[j - 1]) {
-                swap(a + j, a + j - 1, sizeof a[j]);
-            }
-        }
-    }
+int compareBackwards(const void *a, const void *b) {
+    return *(int *) b - *(int *) a;
 }
-*/
+
+void generateOrderedBackwards(int *a, size_t size) {
+    srand(time(0));
+    for (int i = 0; i < size; ++i) {
+        a[i] = rand() % 1000;
+    }
+    qsort(a, size, sizeof a[0], compareBackwards);
+}
 
 void bubbleSort(int *a, int size) {
     int k = 0;
@@ -217,9 +167,116 @@ void shellSort(int *a, int size) {
     }
 }
 
+int getMax(int *a, int size) {
+    int maxElemIndex = 0;
+    for (int i = 1; i < size; ++i) {
+        if (a[i] > a[maxElemIndex]) {
+            maxElemIndex = i;
+        }
+    }
+    return a[maxElemIndex];
+}
+
+void countingSort(int *a, int size) {
+    int copyOfArray[size];
+    memmove(copyOfArray, a, sizeof copyOfArray);
+    int sizeOfIndexArray = getMax(a, size) + 1;
+    int indexArray[sizeOfIndexArray];
+    memset(indexArray, 0, sizeof indexArray);
+    for (int i = 0; i < size; ++i) {
+        ++indexArray[a[i]];
+    }
+    for (int i = 1; i < sizeOfIndexArray; ++i) {
+        indexArray[i] += indexArray[i - 1];
+    }
+    for (int i = 0; i < size; ++i) {
+        a[indexArray[copyOfArray[i]] - 1] = copyOfArray[i];
+        --indexArray[copyOfArray[i]];
+    }
+}
+
+void countingSortForRadixSort(int *a, int size, int shiftBy) {
+    int copyOfArray[size];
+    int shift = 32 - shiftBy;
+    memmove(copyOfArray, a, sizeof copyOfArray);
+    int sizeOfIndexArray = (((getMax(a, size) << shift) >> shift) >> (shift - 8)) + 1;
+    int indexArray[sizeOfIndexArray];
+    memset(indexArray, 0, sizeof indexArray);
+    for (int i = 0; i < size; ++i) {
+        ++indexArray[(((a[i] << shift) >> shift) >> (shift - 8))];
+    }
+    for (int i = 1; i < sizeOfIndexArray; ++i) {
+        indexArray[i] += indexArray[i - 1];
+    }
+    for (int i = 0; i < size; ++i) {
+        a[indexArray[(((copyOfArray[i] << shift) >> shift) >> (shift - 8))] - 1] = copyOfArray[i];
+        --indexArray[(((copyOfArray[i] << shift) >> shift) >> (shift - 8))];
+    }
+}
+
+void radixSort(int *a, int size) {
+    int shift = 32;
+    size_t numbOfIter = sizeof a[0];
+    for (int i = 0; i < numbOfIter; ++i) {
+        countingSortForRadixSort(a, size, shift);
+        shift -= 8;
+    }
+}
+
+void
+checkTime(void (*sortFunc)(int *, size_t), void (*generateFunc)(int *, size_t), size_t size, char *experimentName) {
+    static size_t runCounter = 1;
+    static int innerBuffer[100000];
+    generateFunc(innerBuffer, size);
+    printf("Run  #%zu | ", runCounter++);
+    printf("Name : %s\n", experimentName);
+    double time;
+    TIME_TEST({ sortFunc(innerBuffer, size); }, time)
+    printf("Status:  ");
+    if (isOrdered(innerBuffer, size)) {
+        printf("OK! Time: %.3f s.\n", time);
+        char *filename[256];
+        sprintf(filename, "./data/%s.csv", experimentName);
+        FILE *f = fopen(filename, "a");
+        if (f == NULL) {
+            printf("An error occurred when opening the file %s", filename);
+            exit(1);
+        }
+        fprintf(f, "%zu; %.3f\n", size, time);
+        fclose(f);
+    } else {
+        printf("Wrong!\n");
+        outputArray(innerBuffer, size);
+        exit(1);
+    }
+
+}
+
+void timeExperiment() {
+    sortFunc sorts[] = {{},
+                        {}};
+    const unsigned numberOfFunc = ARRAY_SIZE(sorts);
+    generatingFunc generatingFuncs[] = {{generateRandomArray,      "random"},
+                                        {generateOrderedArray,     "ordered"},
+                                        {generateOrderedBackwards, "orderedBackwards"}};
+    const unsigned numberOfGeneratingFuncs = ARRAY_SIZE(generatingFuncs);
+    for (size_t size = 10000; size <= 100000; size += 10000) {
+        printf("--------------------------------- \n");
+        printf("Size: %lld\n", size);
+        for (int i = 0; i < numberOfFunc; ++i) {
+            for (int j = 0; j < numberOfGeneratingFuncs; ++j) {
+                static char filename[128];
+                sprintf(filename, "%s_%s_time", sorts[i].name, generatingFuncs[j].name);
+                checkTime(sorts[i].sort, generatingFuncs[j].generate, size, filename);
+            }
+        }
+        printf("\n");
+    }
+}
+
 int main() {
-    int array[] = {1, 6, 7, 1, 2, 3, 4};
-    shellSort(array, ARRAY_SIZE(array));
+    int array[] = {5,4,3,2,1};
+    radixSort(array, ARRAY_SIZE(array));
     outputArray(array, ARRAY_SIZE(array));
     return 0;
 }
