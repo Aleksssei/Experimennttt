@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <mem.h>
+#include <stdint.h>
 
 #define TIME_TEST(testCode, time){ \
     clock_t start_time = clock();     \
@@ -195,32 +196,40 @@ void countingSort(int *a, int size) {
     }
 }
 
-void countingSortForRadixSort(int *a, int size, int shiftBy) {
-    int copyOfArray[size];
-    int shift = 32 - shiftBy;
-    memmove(copyOfArray, a, sizeof copyOfArray);
-    int sizeOfIndexArray = (((getMax(a, size) << shift) >> shift) >> (shift - 8)) + 1;
-    int indexArray[sizeOfIndexArray];
-    memset(indexArray, 0, sizeof indexArray);
-    for (int i = 0; i < size; ++i) {
-        ++indexArray[(((a[i] << shift) >> shift) >> (shift - 8))];
-    }
-    for (int i = 1; i < sizeOfIndexArray; ++i) {
-        indexArray[i] += indexArray[i - 1];
-    }
-    for (int i = 0; i < size; ++i) {
-        a[indexArray[(((copyOfArray[i] << shift) >> shift) >> (shift - 8))] - 1] = copyOfArray[i];
-        --indexArray[(((copyOfArray[i] << shift) >> shift) >> (shift - 8))];
-    }
+
+int digit(int n, int k, int N, int M) {
+    return (n >> (N * k) & (M - 1));
 }
 
-void radixSort(int *a, int size) {
-    int shift = 32;
-    size_t numbOfIter = sizeof a[0];
-    for (int i = 0; i < numbOfIter; ++i) {
-        countingSortForRadixSort(a, size, shift);
-        shift -= 8;
+void _radixSort(int *l, int *r, int N) {
+    int k = (32 + N - 1) / N;
+    int M = 1 << N;
+    int sz = r - l;
+    int *b = (int *) malloc(sizeof(int) * sz);
+    int *c = (int *) malloc(sizeof(int) * M);
+    for (int i = 0; i < k; i++) {
+        for (int j = 0; j < M; j++)
+            c[j] = 0;
+
+        for (int *j = l; j < r; j++)
+            c[digit(*j, i, N, M)]++;
+
+        for (int j = 1; j < M; j++)
+            c[j] += c[j - 1];
+
+        for (int *j = r - 1; j >= l; j--)
+            b[--c[digit(*j, i, N, M)]] = *j;
+
+        int cur = 0;
+        for (int *j = l; j < r; j++)
+            *j = b[cur++];
     }
+    free(b);
+    free(c);
+}
+
+void radixSort(int *a, size_t n) {
+    _radixSort(a, a + n, 8);
 }
 
 void
@@ -253,8 +262,13 @@ checkTime(void (*sortFunc)(int *, size_t), void (*generateFunc)(int *, size_t), 
 }
 
 void timeExperiment() {
-    sortFunc sorts[] = {{},
-                        {}};
+    sortFunc sorts[] = {{bubbleSort,    "bubbleSort"},
+                        {selectionSort, "selectionSort"},
+                        {insertionSort, "insertionSort"},
+                        {combSort,      "combSort"},
+                        {shellSort,     "shellSort"},
+                        {countingSort,  "countingSort"},
+                        {radixSort,     "radixSort"}};
     const unsigned numberOfFunc = ARRAY_SIZE(sorts);
     generatingFunc generatingFuncs[] = {{generateRandomArray,      "random"},
                                         {generateOrderedArray,     "ordered"},
@@ -275,8 +289,6 @@ void timeExperiment() {
 }
 
 int main() {
-    int array[] = {5,4,3,2,1};
-    radixSort(array, ARRAY_SIZE(array));
-    outputArray(array, ARRAY_SIZE(array));
+    timeExperiment();
     return 0;
 }
